@@ -218,8 +218,9 @@ def DibujarGrafo(Grafo, colorNodos, colorEnlaces, mostrarPesos, peso='weight'):
         d['weight'] = float( d[peso] ) 
                     
     
-
- 
+    
+    
+     
     # Retrieve the positions from graph nodes and save to a dictionary
     pos=nx.get_node_attributes(Grafo,'pos')
     # Draw nodes

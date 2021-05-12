@@ -439,6 +439,48 @@ while True:
         #Mostrar interfaz de respuestas
         ventanaAtributosPersonales = Funciones.ventanaAtributosPersonales()
         
-        print(respuestasAtributosPersonales)
+        
+
+        
+        
+        if not (getattr(respuestasAtributosPersonales, 'cancelado')):
+            
+            #Se saca el valor personal para cada atributo
+            #Se calcula el factor segun la folmula Factor_i = 1 - (valoracionDelUsuario / 6)
+            
+            k_escalerascConBarandillas = getattr(respuestasAtributosPersonales, 'escalerasConBarandillas')
+            f_escalerascConBarandillas = 1 - (int(k_escalerascConBarandillas)/6)
+            
+            k_escalerasEnBuenEstado = getattr(respuestasAtributosPersonales, 'escalerasEnBuenEstado')
+            f_escalerasEnBuenEstado = 1 - (int(k_escalerasEnBuenEstado)/6)
+            
+            k_pasillosAmplios = getattr(respuestasAtributosPersonales, 'pasillosAmplios')
+            f_pasillosAmplios = 1 - (int(k_pasillosAmplios)/6)
+            
+            k_pasillosVentilados = getattr(respuestasAtributosPersonales, 'pasillosVentilados')
+            f_pasillosVentilados = 1 - (int(k_pasillosVentilados)/6)
+            
+            k_pasillosSecos = getattr(respuestasAtributosPersonales, 'pasillosSecos')
+            f_pasillosSecos = 1 - (int(k_pasillosSecos)/6)
+            
+            k_pasilloIluminados = getattr(respuestasAtributosPersonales, 'pasilloIluminados')
+            f_pasilloIluminados = 1 - (int(k_pasilloIluminados)/6)
+            
+
+            #Se leen del Grafo todos los enlaces
+            #Si cumple la condicion se aplica ese factor, si el factor sera 1 o no se multiplicara 
+            
+            """
+                Es decir si el usuario quiere un pasilloVentilado y un enlace no es ventilado
+                El peso de ese enlace sera el original
+                
+                Mientras que si otro pasillo es ventilado a ese si se le multiplicará por el facto, de esta forma se favorece a los que cumplen la condicion del usuario.
+            """
+
+
+        else:
+            print("Cancelada la ruta según atributos")
+            
+            
                             
         rutaConBarandillas = False
