@@ -87,7 +87,6 @@ class ventanaAtributosPersonales():
         windowWidth = self.root.winfo_reqwidth()
         windowHeight = self.root.winfo_reqheight()
         
-        print("Width",windowWidth,"Height",windowHeight)
          
         # Gets both half the screen width/height and window width/height
         posicionDerecha = int(self.root.winfo_screenwidth()/2 - windowWidth/2)
@@ -289,8 +288,6 @@ Por defecto son todas 0
         
 respuestas = Respuestas()  
 
-          
-ventana = ventanaAtributosPersonales()
 
 
 

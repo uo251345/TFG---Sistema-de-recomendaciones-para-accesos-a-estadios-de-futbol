@@ -432,10 +432,13 @@ while True:
 
     if rutaSegunAtributos:
         
+        
+        respuestasAtributosPersonales = Funciones.respuestas
+        
+        
         #Mostrar interfaz de respuestas
-        ventanaAtributosPersonales = Funciones.iniciar()
+        ventanaAtributosPersonales = Funciones.ventanaAtributosPersonales()
         
-        
-        
+        print(respuestasAtributosPersonales)
                             
         rutaConBarandillas = False
