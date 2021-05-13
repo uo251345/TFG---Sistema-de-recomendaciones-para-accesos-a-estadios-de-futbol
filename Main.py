@@ -453,7 +453,7 @@ while True:
             print("El nodo no esta en el grafo")
         else:
             
-            
+           
             respuestasAtributosPersonales = Funciones.respuestas
             
             
@@ -558,5 +558,17 @@ while True:
                 print("Cancelada la ruta según atributos")
                 
             
-                            
+        #Limpieza de variables
+        destino = None
+        origen = None
+        
+        respuestasAtributosPersonales = None
+        ventanaAtributosPersonales = None
+        G_Atributos = None
+         
+        factores = None
+        color_nodos_solucion  = None
+        
+        djk_Ruta_Atributos = None
+        
         rutaConBarandillas = False

@@ -283,27 +283,31 @@ def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, peso='wei
 
 
 
-def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,origen, destino, ruta, peso='weight'):
+def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos, origen, destino, ruta, peso='weight'):
     """
-
+    
     Parameters
     ----------
     Grafo : networkx.classes.multidigraph.MultiDiGraph
         Grafo a dibujar.
-    colorNodos : string
+    colorNodosSolucion : string
         Lista con el color de los nodos.
     colorEnlaces : string
         String con el color de los enlaces.
     mostrarPesos : bool
-        Boolean - True si se muestran los Pesos
+        Boolean - True si se muestran los Pesos.
+    origen : string
+        String - Nodo inicial de la solucion.
+    destino : string
+        String - Nodo final de la solucion.
+    ruta : lista
+        Lista - (Longitud [Nodos_Solucion])
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
-
-    Returns
-    -------
-    None.
-
+        
     """
+
+  
     
     
     #Nueva ventana
@@ -345,12 +349,10 @@ def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,
     #Para pintar los enlaces solucion
     enlacesSolucion = []
     for indiceSolucion, objetoSolucion in enumerate(ruta):
-        print(ruta[indiceSolucion])
-        if ruta[indiceSolucion+1] != None:
+        if indiceSolucion < len(ruta)-1:
             enlacesSolucion.append( ( ruta[indiceSolucion], ruta[indiceSolucion+1]) )
     
     
-    print (enlacesSolucion)
              
     #Mismo grafo pero pintamos los nodos distinto
     # Retrieve the positions from graph nodes and save to a dictionary
@@ -361,12 +363,15 @@ def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,
     
      
     # Dibujamos los enlaces del Grafo 
-    nx.draw_networkx_edges(Grafo,pos,edgelist=elarge, width=2, edge_color='g', arrows = True)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=elarge, width=1, arrowsize=10,  edge_color='black', arrows = True)
      
     # Dibujamos los atributos del Grafo 
     nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
      
     
+    
+    # Dibujamos los enlaces Solucion del Grafo 
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesSolucion, width=3.5, edge_color='red', arrows = True)
     
     
     enlaces_etiquetas = dict()
