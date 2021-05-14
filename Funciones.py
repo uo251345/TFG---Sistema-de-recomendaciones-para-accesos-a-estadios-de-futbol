@@ -22,7 +22,16 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
+import uuid
+
+
+
+import Clases
+
 import copy
+
+import csv
+
 
 from sys import exit
 
@@ -44,6 +53,9 @@ class MenuAtributosPersonales(OptionMenu):
         val = '{}'.format(self.var.get())
         return val
         # subprocess.call([val])
+    
+    
+
 
 
 class Respuestas:
@@ -174,6 +186,7 @@ class ventanaAtributosPersonales():
         self.center(self.root)
         self.root.protocol("WM_DELETE_WINDOW", self.close_window)
         self.root.mainloop()
+   
         
         return
     
@@ -206,12 +219,104 @@ class ventanaAtributosPersonales():
     
     
     
+
+class ventanaPerfilEspectador():
+    
+    
+    
+    def __init__(self):
+
+        #Mostramos el formulario de consulta
+        self.root = Tk()
+        
+        
+        # Sacamos las dimensiones de la pantilla
+        windowWidth = self.root.winfo_reqwidth()
+        windowHeight = self.root.winfo_reqheight()
+        
+         
+        # Gets both half the screen width/height and window width/height
+        posicionDerecha = int(self.root.winfo_screenwidth()/2 - windowWidth/2)
+        posicionAbajo = int(self.root.winfo_screenheight()/2 - windowHeight/2)
+         
+        # Positions the window in the center of the page.
+        self.root.geometry("+{}+{}".format(posicionDerecha, posicionAbajo))
+
+
+
+
+        self.root.geometry("600x300")
+        self.root.title("Perfil del espectador.")
+        #self.root.resizable(False, False)
+        Label(self.root, text="Datos del espectador.", font="ar 15 bold").place(x=5, y=25)
+
+        #Datos
+        Label(self.root, text="Sector:", font="ar 12 normal").place(x=10, y=50)
+        sector = Clases.MenuSector(self.root, "S11","S11","S12","S21","S22","S31","S32").place(x=80, y=50)
+        Label(self.root, text="Fila:", font="ar 12 normal").place(x=10, y=100)
+        fila = Entry(self.root).place(x=80, y=100)
+        Label(self.root, text="Columna:", font="ar 12 normal").place(x=10, y=150)
+        columna = Entry(self.root).place(x=80, y=150)
+        Label(self.root, text="Puerta:", font="ar 12 normal").place(x=10, y=200)
+        puerta = Entry(self.root).place(x=80, y=200)
+        
+
+
+        
+        #Boton para confirmar
+        botonConfirmar = Button(self.root, text="Confirmar", width = 20, bg="green" ,command=self.root.destroy)
+        botonConfirmar.place(x=270, y=250)
+        
+        self.center(self.root)
+        self.root.protocol("WM_DELETE_WINDOW", self.close_window)
+        self.root.mainloop()
+        
+        
+        print(sector.var.get())
+             
+        
+        self.espectador = Clases.Espectador(uuid.uuid4(), Clases.Asiento(self.sector.var.get(), self.fila.get(), self.columna.get()), self.puerta.get())
+        
+        print(self.espectador)
+        
+        
+        
+        
+        return
+    
+    def center(self, window):
+        """
+        Para centrar la ventana
+        """
+        window.update_idletasks()
+        width = window.winfo_width()
+        frm_width = window.winfo_rootx() - window.winfo_x()
+        win_width = width + 2 * frm_width
+        height = window.winfo_height()
+        titlebar_height = window.winfo_rooty() - window.winfo_y()
+        win_height = height + titlebar_height + frm_width
+        x = window.winfo_screenwidth() // 2 - win_width // 2
+        y = window.winfo_screenheight() // 2 - win_height // 2
+        window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        window.deiconify()
+    
+    
+    def quit(self):
+        self.root.quit()
+        self.root.destroy()
+        
+    def close_window(self):
+        respusta_cerrar = messagebox.askokcancel(message="¿Desea terminar la ejecución del programa?", title="Terminar ejecución")
+        
+        if respusta_cerrar:
+            self.quit()
+    
     
 
     
         
 
-def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, peso='weight'):
+def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, sectores, peso='weight'):
     """
 
     Parameters
@@ -270,6 +375,13 @@ def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, peso='wei
         
     else:
         nx.draw_networkx_edge_labels(Grafo, pos)
+        
+        
+        
+    #Se muestran los sectores
+    # for s in sectores:
+    #     print(sectores[s])
+    
      
     plt.axis('off')
     plt.title("Grafo General")
@@ -423,6 +535,8 @@ def botonAtributosPersonalesClick(ventana_self,escalerasConBarandillas,escaleras
 
 
 
+    
+
    
     
 
@@ -437,7 +551,55 @@ respuestas = Respuestas()
 
 
 
+
+def leerSectoresCSV(fichero, Grafo):
+    
+    sectores = {}
+    
+    
+    with open(fichero) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        next(csv_reader, None)
+        line_count = 0
+        for row in csv_reader:
+            if(row[1] == '1'):
+                row[1] = '01'
+            if(row[1] == '2'):
+                row[1] = '02'
+            
+            if(row[2] == '1'):
+                row[2] = '01'
+            if(row[2] == '2'):
+                row[2] = '02'
+                
+            if(row[3] == '1'):
+                row[3] = '01'
+            if(row[3] == '2'):
+                row[3] = '02'
+            
+            if(row[4] == '1'):
+                row[4] = '01'
+            if(row[4] == '2'):
+                row[4] = '02'
+                
+                
+
+            if row[1] != 'None': 
+                posArribaIzquierda = Grafo.nodes.data()[row[1]]['pos']
+            if row[2] != 'None': 
+                posArribaDerecha = Grafo.nodes.data()[row[2]]['pos']
+            if row[3] != 'None':
+                posAbajoIzquierda = Grafo.nodes.data()[row[3]]['pos']
+            if row[4] != 'None':
+                posAbajoDerecha = Grafo.nodes.data()[row[4]]['pos']
+            
+            pos = ((posArribaIzquierda[0] + posAbajoDerecha[0])/2, (posArribaIzquierda[1] + posAbajoDerecha[1])/2)
+            
+            pos = (0,1)
+            
+            sector = Clases.Sector(row[0], row[1], row[2], row[3], row[4], int(row[5]), int(row[6]), pos)
+            sectores[row[0]]= sector
         
-        
+    return sectores
         
 

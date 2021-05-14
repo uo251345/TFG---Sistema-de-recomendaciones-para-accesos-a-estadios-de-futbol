@@ -12,9 +12,15 @@ import networkx as nx
 
 import numpy
 
+import uuid
+
 import Funciones 
 
+import Clases
+
 import sys
+
+import os
 
 
 #Para ignorar algunos warning de libreia deprecated
@@ -24,6 +30,12 @@ warnings.filterwarnings("ignore")
     
     
 DEBUG=False
+
+
+#Ubicacion del fichero Main.py
+__location__ = os.path.realpath(
+    os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
 
 #Variables para la ejecuccion del programa
 rutaMasCorta = False
@@ -175,21 +187,68 @@ for node in G:
          
          
 
+sectores = Funciones.leerSectoresCSV(__location__ + "//Ficheros//Sectores.csv", G)
+
+
          
-Funciones.DibujarGrafoGeneral(G, color_map, 'green', True, 'weight')
+Funciones.DibujarGrafoGeneral(G, color_map, 'green', True, sectores, 'weight')
 
 
 
 
 
+#Se piden al espectador los datos para crearle un perfil
+print("")
+print("PERFIL DEL ESPECTADOR")
+print("")
+while True:
+    try:
+        sector = input("Sector: ").upper()
+        if sector in sectores:
+            sectorEspectador = sectores[sector]
+            break
+        raise ValueError()
+    except ValueError:
+        print("El sector: " + sector + " no se encuentra en la grada.")
+        
 
 
 
+while True:
+    try:
+        fila = int(input("Fila: "))
+        if 1 <= fila:
+            break
+        raise ValueError()
+    except ValueError:
+        print("Fila debe ser mayor o igual que 1")
+        
+
+while True:
+    try:
+        columna = int(input("Columna: "))
+        if 1 <= columna:
+            break
+        raise ValueError()
+    except ValueError:
+        print("Columna debe ser mayor o igual que 1")
+
+
+puertaEntrada = input("Puerta de entrada: (Por defecto P1)")
+if not puertaEntrada:
+    puertaEntrada = 'P1'
+        
+        
 
 
 
+espectador = Clases.Espectador(uuid.uuid4(), Clases.Asiento(sectorEspectador, fila, columna), puertaEntrada)
 
-            
+origen = espectador.puertaEntrada
+destino = espectador.nodoPrefinal
+
+print("Destino: " + str(destino))
+
 
 
 while True:
@@ -218,21 +277,15 @@ while True:
 
     
     if rutaMasCorta:    
-        #print ("")
-        #print ("Escriba el origen:")
-        #origen = str(input())
+
         
-        print ("")
-        print ("Escriba el destino:")
-        destino = str(input())
         #Checkeo de que esta en el grafo
         if destino not in G.nodes():
             print("El nodo no esta en el grafo")
         else:
             
             
-            origen = 'P1'
-            
+
             
             
             #Nueva ventana
@@ -317,15 +370,13 @@ while True:
          ****************  ALGORITMO DE RUTA MAS RAPIDA  ****************
          """
         
-        print ("")
-        print ("Escriba el destino:")
-        destino = str(input())
+       
         #Checkeo de que esta en el grafo
         if destino not in G.nodes():
             print("El nodo no esta en el grafo")
         else:
             
-            origen = 'P1'
+           
             
             
             
@@ -354,11 +405,11 @@ while True:
            
             for u, v, d in G.edges(data=True):
                 if ( d['tipoEnlace'] == "escalera") and ( d['inclinacion'] == "+"  ):
-                    d['weight'] = "{:.2f}".format( float( d['longitud'] ) / FACTOR_SUBIDA_ESCALERAS )
+                    d['weight'] =  float( d['longitud'] ) / FACTOR_SUBIDA_ESCALERAS 
                 elif ( d['tipoEnlace'] == "escalera" ) and ( d['inclinacion'] == "-"  ):
-                    d['weight'] = "{:.2f}".format( float( d['longitud'] ) / FACTOR_BAJADA_ESCALERAS )
+                    d['weight'] =  float( d['longitud'] ) / FACTOR_BAJADA_ESCALERAS 
                 else:
-                    d['weight'] = "{:.2f}".format( float( d['longitud'] ) / FACTOR_PLANOS )
+                    d['weight'] =  float( d['longitud'] ) / FACTOR_PLANOS 
             
             
             
@@ -387,8 +438,8 @@ while True:
             
             
             # Cargamos el peso de los enlaces para poder mostarlo
-            edge_labels =dict([((u, v), d['weight']) 
-                               for u, v, d in G.edges(data=True)])
+            edge_labels =dict([((u, v),"{:.2f}".format( float( d['weight'] )) ) 
+                   for u, v, d in G.edges(data=True)])
              
             nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
              
@@ -400,6 +451,8 @@ while True:
             
             #Dijkstra
             try:
+                
+                
                 djk_Ruta = nx.bidirectional_dijkstra(G, source=origen, target=destino, weight='weight')
             except nx.NetworkXNoPath:
                 print("No existe ruta de: " + origen + " a " + destino)
@@ -444,13 +497,11 @@ while True:
     if rutaSegunAtributos:
         
         
-        print ("")
-        print ("Escriba el destino:")
-        destino = str(input())
-        origen = "P1"
+        
         #Checkeo de que esta en el grafo
         if destino not in G.nodes():
             print("El nodo no esta en el grafo")
+            print(destino)
         else:
             
            
@@ -559,8 +610,6 @@ while True:
                 
             
         #Limpieza de variables
-        destino = None
-        origen = None
         
         respuestasAtributosPersonales = None
         ventanaAtributosPersonales = None
