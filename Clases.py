@@ -7,7 +7,7 @@
 from tkinter import * 
 from tkinter import ttk
 from tkinter import messagebox
-
+import numpy
 
 
 
@@ -101,15 +101,19 @@ class Asiento():
     def __repr__(self):
         return "El Asiento, esta en el sector %s fila: %s, columna: %s" % (self.sector.nombre, self.fila, self.columna)
         
-    def nodoFinal(self):
+    def nodoFinal(self, tieneProblemasDeMovilidad):
+        divisorVertical = 2
+        if(tieneProblemasDeMovilidad == True): divisorVertical = 0.75
         
+       
        
         proyeccionHorizontal = None
         proyeccionVertical = None
         
         #NOTA: Las filas se enumeran de izquierda a derecha --------------------
         
-        #Primero se mira si tiene enlaces derecha o izquierda
+        #Primero se mira si tiene enlaces derecha o izquierda        
+        
         if (self.sector.existeEnlaceIzquierdo() == True or self.sector.existeEnlaceDerecho() == True):
         
             #Se mira cual es el lado mas próximo (izquierda o derecha)
@@ -142,13 +146,18 @@ class Asiento():
         
         #Se mira cual es el lado mas próximo (arriba o abajo)
         #Si es menor que la mitad de las columnas lado abajo (SI EXISTE)
-        if (self.fila < (self.sector.filas/2)):
+        #Si tiene problemas de movilidad se subira hasta 3/4
+        filaLimiteFloatNumpy = numpy.around(self.sector.filas*divisorVertical, decimals=0 )
+        filaLimiteIntNumpy = filaLimiteFloatNumpy.astype(int)
+        filaLimiteVertical = filaLimiteIntNumpy.item()
+        
+        if (self.fila <  filaLimiteVertical ):
             if(self.sector.existeEnlaceAbajo()):
                 proyeccionVertical = 'ABA'
             else:    
                 proyeccionVertical = 'ARR'
             
-        elif (self.fila >= (self.sector.filas/2)):    
+        elif (self.fila >= filaLimiteVertical ):    
             if(self.sector.existeEnlaceArriba()):
                 proyeccionVertical = 'ARR'
             else:
@@ -175,7 +184,7 @@ class Asiento():
 class Espectador:
     """Clase para crear un objeto espectador al que se recomendara una ruta"""
     
-    def __init__(self, ID, asiento, puertaEntrada):
+    def __init__(self, ID, asiento, puertaEntrada, tieneProblemasDeMovilidad):
         """
 
         Parameters
@@ -186,6 +195,8 @@ class Espectador:
             Asiento al que quiere llegar.
         puertaEntrada : String
             Puerta por la que accede al estadio
+        tieneProblemasDeMovilidad: Boolean
+            True si tiene problemas de movilidad, False en otro caso
 
         Returns
         -------
@@ -196,7 +207,8 @@ class Espectador:
         self.ID = ID
         self.asiento = asiento
         self.puertaEntrada = puertaEntrada
-        self.nodoPrefinal = self.asiento.nodoFinal()
+        self.tieneProblemasDeMovilidad = tieneProblemasDeMovilidad
+        self.nodoPrefinal = self.asiento.nodoFinal(self.tieneProblemasDeMovilidad)
         
         
     def __repr__(self):

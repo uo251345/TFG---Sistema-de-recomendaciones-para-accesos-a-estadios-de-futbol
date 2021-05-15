@@ -111,7 +111,7 @@ G.add_edge('02','14',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = 
 
 
 #Los del Nivel 1
-G.add_edge('11','12',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '' )
+G.add_edge('11','12',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '' )
 G.add_edge('11','21',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '' )
 
 G.add_edge('12','01',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '' )
@@ -185,15 +185,11 @@ for node in G:
          color_map.append('pink')
          
          
-         
 
 sectores = Funciones.leerSectoresCSV(__location__ + "//Ficheros//Sectores.csv", G)
 
 
-         
-Funciones.DibujarGrafoGeneral(G, color_map, 'green', True, sectores, 'weight')
-
-
+plotGeneral = Funciones.DibujarGrafoGeneral(G, color_map, True, sectores , 'weight')
 
 
 
@@ -234,24 +230,51 @@ while True:
         print("Columna debe ser mayor o igual que 1")
 
 
-puertaEntrada = input("Puerta de entrada: (Por defecto P1)")
+puertaEntrada = input("Puerta de entrada (Por defecto P1 [ENTER])")
 if not puertaEntrada:
     puertaEntrada = 'P1'
+
+while True: 
+    try:
+        tieneProblemasDeMovilidadRespuesta = input("Tiene problemas de movilidad s/n : ")
+        if tieneProblemasDeMovilidadRespuesta.lower() == 's':
+            tieneProblemasDeMovilidad = True
+            break
+        elif tieneProblemasDeMovilidadRespuesta.lower() == 'n':
+            tieneProblemasDeMovilidad = False
+            break
+        raise ValueError()
+    except ValueError:
+        print("Selecciones si(s) o no (n).")
+
         
         
 
 
 
-espectador = Clases.Espectador(uuid.uuid4(), Clases.Asiento(sectorEspectador, fila, columna), puertaEntrada)
+espectador = Clases.Espectador(uuid.uuid4(), Clases.Asiento(sectorEspectador, fila, columna), puertaEntrada, tieneProblemasDeMovilidad)
 
 origen = espectador.puertaEntrada
 destino = espectador.nodoPrefinal
 
-print("Destino: " + str(destino))
+         
+
+# Se dibuja el asiento en la figura
+Funciones.dibujarAsientoGrafoGeneral(G, sectores, Clases.Asiento(sectorEspectador, fila, columna), plotGeneral)      
+
+#Se dibujan los datos del espectador
+Funciones.dibujarDatosEspectadorGeneral(G, espectador, plotGeneral)
 
 
 
-while True:
+print("")
+print("Se han actualizado el grafo para mostrar su asiento.")
+print("")
+
+
+
+
+while False:
     
     #Pedimos que quire aplicar
     print ("")
@@ -480,7 +503,7 @@ while True:
             
             #plt.get_current_fig_manager().window.showMaximized()
             
-            plt.text(0, -1.5, 'La ruta más rapida recomendada desde [' + origen + '] hasta  [' + destino + '] es la ruta que pasa por los nodos: ' + str(djk_Ruta), style='italic',
+            plt.text(0, -1.5, 'La ruta más rápida recomendada desde [' + origen + '] hasta  [' + destino + '] es la ruta que pasa por los nodos: ' + str(djk_Ruta), style='italic',
                     bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
             
 

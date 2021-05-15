@@ -57,7 +57,6 @@ class MenuAtributosPersonales(OptionMenu):
     
 
 
-
 class Respuestas:
     
     
@@ -316,7 +315,7 @@ class ventanaPerfilEspectador():
     
         
 
-def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, sectores, peso='weight'):
+def DibujarGrafoGeneral(Grafo, colorNodos, mostrarPesos, sectores, peso='weight'):
     """
 
     Parameters
@@ -325,8 +324,6 @@ def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, sectores,
         Grafo a dibujar.
     colorNodos : list
         Lista con el color de los nodos.
-    colorEnlaces : string
-        String con el color de los enlaces.
     mostrarPesos : bool
         Boolean - True si se muestran los Pesos
     peso : string, optional
@@ -342,24 +339,49 @@ def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, sectores,
     height0 = 9
     width_height_0 = (width0, height0)
     plt.figure(1,figsize=width_height_0)
+    plt.clf()
     
     plt.figure(1).canvas.set_window_title('Grafo General - Pelayo Tiesta') 
-    
+
     for u, v, d in Grafo.edges(data=True):
         d['weight'] = float( d[peso] ) 
                     
     
+    #Para pintar los enlaces solucion
+    enlacesPasillos = []
+    enlacesPasillosConBarandillas = []
+    enlacesEscaleras = []
+    enlacesEscalerasConBarandillas = []
+    
+    for u, v, d in Grafo.edges(data=True):
+        if d['tipoEnlace'] == 'plano':
+            if d['barandilla'] == 'True':
+                enlacesPasillosConBarandillas.append((u, v))
+            else: enlacesPasillos.append((u, v))
+            
+        if d['tipoEnlace'] == 'escalera':
+            if d['barandilla'] == 'True':
+                enlacesEscalerasConBarandillas.append((u, v))
+            else: enlacesEscaleras.append((u, v))
+            
     
     
      
-    # Retrieve the positions from graph nodes and save to a dictionary
+    # Se sacan las posiciones de los nodos
     pos=nx.get_node_attributes(Grafo,'pos')
-    # Draw nodes
+    
+    # Se dibujan los nodos
     nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodos)
     
-     
-    # Draw edges
-    nx.draw_networkx_edges(Grafo,pos, width=2, edge_color=colorEnlaces)
+    # Se dibujan los 4 tipos de enlaces
+    # Pasillos sin barandilla (color Verde)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesPasillos,    edge_color='springgreen', arrows = True)
+    # Pasillos con barandilla (color verde Oscuro)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesPasillosConBarandillas,   edge_color='darkgreen', arrows = True)
+    # Escaleras sin barandilla (color Verde)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesEscaleras,   edge_color='deepskyblue', arrows = True,)
+    # Escaleras con barandilla (color verde Oscuro)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesEscalerasConBarandillas,   edge_color='darkblue', arrows = True)
      
     # Draw node labels
     nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
@@ -379,10 +401,17 @@ def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, sectores,
         
         
     #Se muestran los sectores
-    # for s in sectores:
-    #     print(sectores[s])
+    for key in sectores:
     
-     
+        plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
+                    bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
+        
+    
+    #Leyenda con los datos
+    plt.text(0, -0.5, 'LEYENDA\n' + '\nPasillos planos sin barandilla: Verde Claro' + '\nPasillos planos con barandilla: Verde Oscuro' + '\nPasillos con escaleras sin barandilla: Azul Claro' + '\nPasillos con escaleras con barandilla: Azul Oscuro' + '\n\nAsiento: Cuadrado Rojo [x]'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
+    
+
+    
     plt.axis('off')
     plt.title("Grafo General")
     
@@ -393,6 +422,97 @@ def DibujarGrafoGeneral(Grafo, colorNodos, colorEnlaces, mostrarPesos, sectores,
     plt.pause(1)
 
 
+    return plt
+
+
+
+
+def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, plot):
+    
+    
+    
+    #Dibujar asiento    
+    sector_asiento = getattr(asiento, 'sector')
+    filas_sector = getattr(sector_asiento, 'filas')
+    columnas_sector = getattr(sector_asiento, 'columnas')
+    nodo_ArribaIzquierda = getattr(sector_asiento, 'nodoArribaIzquierda')
+    nodo_ArribaDerecha = getattr(sector_asiento, 'nodoArribaDerecha')
+    nodo_AbajoIzquierda = getattr(sector_asiento, 'nodoAbajoIzquierda')
+    nodo_AbajoDerecha = getattr(sector_asiento, 'nodoAbajoDerecha')
+    fila_asiento = getattr(asiento, 'fila')
+    columna_asiento = getattr(asiento, 'columna')
+    
+    
+    longitud_enlace_arriba1 = None
+    longitud_enlace_arriba2 = None
+    longitud_enlace_derecha1 = None
+    longitud_enlace_derecha2 = None
+
+
+    #Se verifica que el asiento no esta fuera del sector
+    if (fila_asiento > filas_sector): raise Exception("Error: La fila del aseinto esta fuera de las filas del sector. El sector tiene solo: " + str(filas_sector) + " filas.")
+    
+    if(columna_asiento > columnas_sector): raise Exception("Error: La columna del aseinto esta fuera de las columnas del sector. El sector tiene solo: " + str(columnas_sector) + " columnas.")
+    
+    
+    try:
+        longitud_enlace_arriba1 = Grafo.nodes()[nodo_ArribaDerecha]['pos'][0] - Grafo.nodes()[nodo_ArribaIzquierda]['pos'][0]
+    except:
+        IgnorarError = ''
+     
+    try:
+        longitud_enlace_arriba2 = Grafo.nodes()[nodo_AbajoDerecha]['pos'][0]- Grafo.nodes()[nodo_AbajoIzquierda]['pos'][0]
+    except:
+        IgnorarError = ''
+        
+    longitud_enlace_arriba = None
+    if(longitud_enlace_arriba1 != None): longitud_enlace_arriba = longitud_enlace_arriba1    
+    else: longitud_enlace_arriba = longitud_enlace_arriba2
+    
+    
+    
+    try:
+        longitud_enlace_derecha1 = Grafo.nodes()[nodo_ArribaDerecha]['pos'][1] - Grafo.nodes()[nodo_AbajoDerecha]['pos'][1]
+    except:
+        IgnorarError = ''
+     
+    try:
+        longitud_enlace_derecha2 = Grafo.nodes()[nodo_ArribaIzquierda]['pos'][1]- Grafo.nodes()[nodo_AbajoIzquierda]['pos'][1]
+    except:
+        IgnorarError = ''
+        
+    longitud_enlace_derecha = None
+    if(longitud_enlace_derecha1 != None): longitud_enlace_derecha = longitud_enlace_derecha1    
+    else: longitud_enlace_derecha = longitud_enlace_derecha2
+    
+    unidadesVertical = longitud_enlace_derecha/filas_sector
+    unidadesHorizontal = longitud_enlace_arriba/columnas_sector
+    
+    posicionX_asiento = Grafo.nodes()[nodo_ArribaIzquierda]['pos'][0] + (unidadesHorizontal * columna_asiento)
+    posicionY_asiento = Grafo.nodes()[nodo_ArribaIzquierda]['pos'][1] - (unidadesVertical * (filas_sector - fila_asiento)) 
+    
+    #Se dibuja el asiento (Se resta un offset a cada componente espacial para ajustar la posicion en la figura)
+    plt.ion()
+    plt.draw()
+    plt.pause(0.0001)
+    plot.text(posicionX_asiento - 0.08, posicionY_asiento - 0.1, 'x', style='italic', fontweight='bold',bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 0.5})
+    plt.pause(0.0001)
+    
+    
+    
+
+
+def dibujarDatosEspectadorGeneral(Grafo, espectador, plot):
+    
+    ID = "\nID: " + str(getattr(espectador, 'ID'))
+    PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
+    NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
+    
+    plt.ion()
+    plt.draw()
+    plt.pause(0.0001)
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal , style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    plt.pause(0.0001)
 
 
 def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos, origen, destino, ruta, peso='weight'):
@@ -515,7 +635,6 @@ def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,
 
 
 
-    
 
 
 def botonAtributosPersonalesClick(ventana_self,escalerasConBarandillas,escalerasEnBuenEstado,pasillosAmplios, pasillosVentilados,  pasillosSecos, pasilloIluminados):
@@ -560,29 +679,15 @@ def leerSectoresCSV(fichero, Grafo):
     with open(fichero) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
         next(csv_reader, None)
-        line_count = 0
         for row in csv_reader:
-            if(row[1] == '1'):
-                row[1] = '01'
-            if(row[1] == '2'):
-                row[1] = '02'
+
+            pos1 = None
+            pos2 = None
             
-            if(row[2] == '1'):
-                row[2] = '01'
-            if(row[2] == '2'):
-                row[2] = '02'
-                
-            if(row[3] == '1'):
-                row[3] = '01'
-            if(row[3] == '2'):
-                row[3] = '02'
-            
-            if(row[4] == '1'):
-                row[4] = '01'
-            if(row[4] == '2'):
-                row[4] = '02'
-                
-                
+            posArribaIzquierda = None
+            posArribaDerecha = None
+            posAbajoIzquierda = None
+            posAbajoDerecha = None
 
             if row[1] != 'None': 
                 posArribaIzquierda = Grafo.nodes.data()[row[1]]['pos']
@@ -592,10 +697,19 @@ def leerSectoresCSV(fichero, Grafo):
                 posAbajoIzquierda = Grafo.nodes.data()[row[3]]['pos']
             if row[4] != 'None':
                 posAbajoDerecha = Grafo.nodes.data()[row[4]]['pos']
+            try:
+                pos1 = ((posArribaIzquierda[0] + posAbajoDerecha[0])/2, (posArribaIzquierda[1] + posAbajoDerecha[1])/2)
+            except:
+                IgnorarError = ''
             
-            pos = ((posArribaIzquierda[0] + posAbajoDerecha[0])/2, (posArribaIzquierda[1] + posAbajoDerecha[1])/2)
+            try:
+                pos2 = ((posArribaDerecha[0] + posAbajoIzquierda[0])/2, (posArribaDerecha[1] + posAbajoIzquierda[1])/2)
+            except:
+                IgnorarError = ''
             
-            pos = (0,1)
+            
+            if pos1 != None: pos = pos1
+            else: pos = pos2
             
             sector = Clases.Sector(row[0], row[1], row[2], row[3], row[4], int(row[5]), int(row[6]), pos)
             sectores[row[0]]= sector
