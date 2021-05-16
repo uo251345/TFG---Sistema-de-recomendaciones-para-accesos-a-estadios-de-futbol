@@ -16,19 +16,26 @@ except:
     raise
  
 import networkx as nx
+from networkx.readwrite import json_graph
 
 
 from tkinter import * 
 from tkinter import ttk
 from tkinter import messagebox
 
+import json
+
 import uuid
 
+import threading
+import time
 
 
 import Clases
 
 import copy
+
+import sys
 
 import csv
 
@@ -403,8 +410,8 @@ def DibujarGrafoGeneral(Grafo, colorNodos, mostrarPesos, sectores, peso='weight'
     #Se muestran los sectores
     for key in sectores:
     
-        plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
-                    bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
+        plt.text(getattr(sectores[key],'posicion')[0]-0.35, getattr(sectores[key],'posicion')[1]-0.2, key + "\nFilas: " + str(getattr(sectores[key],'filas')) + "\nColumnas: " + str(getattr(sectores[key],'columnas')) , style='italic', fontweight='bold',
+                    bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 1})
         
     
     #Leyenda con los datos
@@ -423,6 +430,8 @@ def DibujarGrafoGeneral(Grafo, colorNodos, mostrarPesos, sectores, peso='weight'
 
 
     return plt
+
+
 
 
 
@@ -450,10 +459,15 @@ def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, plot):
 
 
     #Se verifica que el asiento no esta fuera del sector
-    if (fila_asiento > filas_sector): raise Exception("Error: La fila del aseinto esta fuera de las filas del sector. El sector tiene solo: " + str(filas_sector) + " filas.")
-    
-    if(columna_asiento > columnas_sector): raise Exception("Error: La columna del aseinto esta fuera de las columnas del sector. El sector tiene solo: " + str(columnas_sector) + " columnas.")
-    
+    if (fila_asiento > filas_sector): 
+        print("\n\n\nError: La fila del asiento esta fuera de las filas del sector. El sector tiene solo: " + str(filas_sector) + " filas.")
+        input("Presiona ENTER para terminar la ejecuccion...")
+        sys.exit()
+        
+    if(columna_asiento > columnas_sector): 
+        print("\n\n\nError: La columna del asiento esta fuera de las columnas del sector. El sector tiene solo: " + str(columnas_sector) + " columnas.")
+        input("Presiona ENTER para terminar la ejecucción...")
+        sys.exit()
     
     try:
         longitud_enlace_arriba1 = Grafo.nodes()[nodo_ArribaDerecha]['pos'][0] - Grafo.nodes()[nodo_ArribaIzquierda]['pos'][0]
@@ -507,25 +521,80 @@ def dibujarDatosEspectadorGeneral(Grafo, espectador, plot):
     ID = "\nID: " + str(getattr(espectador, 'ID'))
     PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
     NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
+    if(str(getattr(espectador, 'tieneProblemasDeMovilidad'))) == 'True':
+        problemasMovilidad = "\nProblemas de movilidad: Sí"
+    else:
+        problemasMovilidad = "\nProblemas de movilidad: No"
     
     plt.ion()
     plt.draw()
     plt.pause(0.0001)
-    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal , style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal + problemasMovilidad, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
     plt.pause(0.0001)
 
 
-def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos, origen, destino, ruta, peso='weight'):
+def dibujarDatosEspectadorAtributos(Grafo, espectador, plot):
+    
+    ID = "\nID: " + str(getattr(espectador, 'ID'))
+    PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
+    NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
+    if(str(getattr(espectador, 'tieneProblemasDeMovilidad'))) == 'True':
+        problemasMovilidad = "\nProblemas de movilidad: Sí"
+    else:
+        problemasMovilidad = "\nProblemas de movilidad: No"
+    
+    plt.ion()
+    plt.draw()
+    plt.pause(0.0001)
+    
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal + problemasMovilidad, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    plt.pause(0.0001)
+
+
+def dibujarDatosEspectadorMasRapida(Grafo, espectador, plot):
+    
+    ID = "\nID: " + str(getattr(espectador, 'ID'))
+    PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
+    NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
+    if(str(getattr(espectador, 'tieneProblemasDeMovilidad'))) == 'True':
+        problemasMovilidad = "\nProblemas de movilidad: Sí"
+    else:
+        problemasMovilidad = "\nProblemas de movilidad: No"
+    
+    plt.ion()
+    plt.draw()
+    plt.pause(0.0001)
+    
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal + problemasMovilidad, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    plt.pause(0.0001)
+
+
+def dibujarDatosEspectadorMasCorta(Grafo, espectador, plot):
+    
+    ID = "\nID: " + str(getattr(espectador, 'ID'))
+    PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
+    NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
+    if(str(getattr(espectador, 'tieneProblemasDeMovilidad'))) == 'True':
+        problemasMovilidad = "\nProblemas de movilidad: Sí"
+    else:
+        problemasMovilidad = "\nProblemas de movilidad: No"
+    
+    plt.ion()
+    plt.draw()
+    plt.pause(0.0001)
+    
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal + problemasMovilidad, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    plt.pause(0.0001)
+    
+
+def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
     """
     
     Parameters
     ----------
     Grafo : networkx.classes.multidigraph.MultiDiGraph
         Grafo a dibujar.
-    colorNodosSolucion : string
-        Lista con el color de los nodos.
-    colorEnlaces : string
-        String con el color de los enlaces.
     mostrarPesos : bool
         Boolean - True si se muestran los Pesos.
     origen : string
@@ -534,6 +603,12 @@ def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,
         String - Nodo final de la solucion.
     ruta : lista
         Lista - (Longitud [Nodos_Solucion])
+    espectador : Espectador
+        Espectador que accede a un asiento.
+    sectores : Lista
+        Lista de Sector.
+    asiento : Asiento
+        Asiento al que se accede.
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
         
@@ -548,7 +623,7 @@ def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,
     width_height_1 = (width1, height1)
     plt.figure(4,figsize=width_height_1)
     plt.figure(4).canvas.set_window_title('Ruta según atributos personales desde el nodo [' + origen + '] hasta [' + destino + ']' ) 
-    
+    plt.clf()
             
             
             
@@ -575,14 +650,29 @@ def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,
              #print("aqui3")
              color_map.append('pink')
     
-     
-    elarge=[(u,v) for (u,v,d) in Grafo.edges(data=True) ] # solid edge
+    
+    
+    #Se pintan los nodos de la solucion
+    colorNodosSolucion = []
+    for node in Grafo:
+        #Si esta en la ruta lo pinto de color 
+        if str(node) in ruta:
+             colorNodosSolucion.append('lawngreen')
+        else :
+             colorNodosSolucion.append('grey')
     
     #Para pintar los enlaces solucion
     enlacesSolucion = []
     for indiceSolucion, objetoSolucion in enumerate(ruta):
         if indiceSolucion < len(ruta)-1:
             enlacesSolucion.append( ( ruta[indiceSolucion], ruta[indiceSolucion+1]) )
+    
+    
+    #Para pintar los enlaces que no son solucion
+    enlacesNoSolucion= []
+    for (u,v,d) in Grafo.edges(data=True):
+        if (u, v) not in enlacesSolucion:
+            enlacesNoSolucion.append((u, v))
     
     
              
@@ -595,15 +685,16 @@ def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,
     
      
     # Dibujamos los enlaces del Grafo 
-    nx.draw_networkx_edges(Grafo,pos,edgelist=elarge, width=1, arrowsize=10,  edge_color='black', arrows = True)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True)
+    # Dibujamos los enlaces Solucion del Grafo (Color Verde)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesSolucion, width=3.5, edge_color='green', arrows = True)
      
     # Dibujamos los atributos del Grafo 
     nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
      
     
     
-    # Dibujamos los enlaces Solucion del Grafo 
-    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesSolucion, width=3.5, edge_color='red', arrows = True)
+    
     
     
     enlaces_etiquetas = dict()
@@ -616,15 +707,32 @@ def DibujarGrafoAtributos(Grafo, colorNodosSolucion, colorEnlaces, mostrarPesos,
     nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=enlaces_etiquetas)
      
     plt.axis('off')
-    plt.title("Grafo Segun atributos personales")
+    plt.title("Grafo según Atributos Personales")
     
     plt.text(0, -1.5, 'La ruta, según criterios del usuaruio, recomendada desde [' + origen + '] hasta  [' + destino + '] es la ruta que pasa por los nodos: ' + str(ruta), style='italic',
                     bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
            
     
-    
+    #Se pintan los nodos
     nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodosSolucion)
 
+
+    for key in sectores:
+   
+       plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
+                   bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
+
+
+    # Se pinta la leyenda 
+    plt.text(0, -0.5, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Cuadrado Rojo [x]'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
+    
+
+    # Se pinta el asiento
+    dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, plt)
+
+
+    # Se pintan los datos del grafo
+    dibujarDatosEspectadorAtributos(Grafo, espectador, plt)
 
 
     plt.ion()
@@ -654,10 +762,263 @@ def botonAtributosPersonalesClick(ventana_self,escalerasConBarandillas,escaleras
 
 
 
+
+def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
+    """
+    
+    Parameters
+    ----------
+    Grafo : networkx.classes.multidigraph.MultiDiGraph
+        Grafo a dibujar.
+    mostrarPesos : bool
+        Boolean - True si se muestran los Pesos.
+    origen : string
+        String - Nodo inicial de la solucion.
+    destino : string
+        String - Nodo final de la solucion.
+    ruta : lista
+        Lista - (Longitud [Nodos_Solucion])
+    espectador : Espectador
+        Espectador que accede a un asiento.
+    sectores : Lista
+        Lista de Sector.
+    asiento : Asiento
+        Asiento al que se accede.
+    peso : string, optional
+        String con el la etiqueta peso. (Default: weight)
+        
+    """
+
+    #Nueva ventana
+    width1 = 9
+    height1 = 9
+    width_height_1 = (width1, height1)
+    plt.figure(3,figsize=width_height_1)
+    plt.figure(3).canvas.set_window_title('Ruta más rápida desde el nodo [' + origen + '] hasta [' + destino + ']' ) 
+    plt.clf()
+            
+
+    for u, v, d in Grafo.edges(data=True):
+        d['weight'] = float( d[peso] ) 
+                    
+
+    
+    
+    
+    #Se pintan los nodos de la solucion
+    colorNodosSolucion = []
+    for node in Grafo:
+        #Si esta en la ruta lo pinto de color 
+        if str(node) in ruta:
+             colorNodosSolucion.append('lawngreen')
+        else :
+             colorNodosSolucion.append('grey')
+    
+    #Para pintar los enlaces solucion
+    enlacesSolucion = []
+    for indiceSolucion, objetoSolucion in enumerate(ruta):
+        if indiceSolucion < len(ruta)-1:
+            enlacesSolucion.append( ( ruta[indiceSolucion], ruta[indiceSolucion+1]) )
+    
+    
+    #Para pintar los enlaces que no son solucion
+    enlacesNoSolucion= []
+    for (u,v,d) in Grafo.edges(data=True):
+        if (u, v) not in enlacesSolucion:
+            enlacesNoSolucion.append((u, v))
+    
+    
+             
+    #Mismo grafo pero pintamos los nodos distinto
+    # Retrieve the positions from graph nodes and save to a dictionary
+    pos=nx.get_node_attributes(Grafo,'pos')
+    
+    
+     
+    # Dibujamos los enlaces del Grafo 
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True)
+    # Dibujamos los enlaces Solucion del Grafo (Color Verde)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesSolucion, width=3.5, edge_color='green', arrows = True)
+     
+    # Dibujamos los atributos del Grafo 
+    nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
+      
+    
+    enlaces_etiquetas = dict()
+    # Cargamos el peso de los enlaces para poder mostarlo
+    enlaces_etiquetas =dict([((u, v),"{:.2f}".format( float( d['weight'] )) ) 
+                       for u, v, d in Grafo.edges(data=True)])
+    
+     
+    nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=enlaces_etiquetas)
+     
+    plt.axis('off')
+    plt.title("Grafo ruta más rápida")
+    
+    plt.text(0, -1.5, 'La ruta más rápida recomendada desde [' + origen + '] hasta  [' + destino + '] es la ruta que pasa por los nodos: ' + str(ruta), style='italic',
+                    bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
+           
+    
+    #Se pintan los nodos
+    nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodosSolucion)
+
+
+    for key in sectores:
+   
+       plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
+                   bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
+
+    # Se pinta la leyenda 
+    plt.text(0, -0.5, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Cuadrado Rojo [x]'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
     
 
-   
+    # Se pinta el asiento
+    dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, plt)
+
+
+    # Se pintan los datos del grafo
+    dibujarDatosEspectadorMasRapida(Grafo, espectador, plt)
+
+
+    plt.ion()
     
+    plt.show(block=False)
+
+    plt.pause(1)
+
+
+
+
+
+def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
+    """
+    
+    Parameters
+    ----------
+    Grafo : networkx.classes.multidigraph.MultiDiGraph
+        Grafo a dibujar.
+    mostrarPesos : bool
+        Boolean - True si se muestran los Pesos.
+    origen : string
+        String - Nodo inicial de la solucion.
+    destino : string
+        String - Nodo final de la solucion.
+    ruta : lista
+        Lista - (Longitud [Nodos_Solucion])
+    espectador : Espectador
+        Espectador que accede a un asiento.
+    sectores : Lista
+        Lista de Sector.
+    asiento : Asiento
+        Asiento al que se accede.
+    peso : string, optional
+        String con el la etiqueta peso. (Default: weight)
+        
+    """
+
+    #Nueva ventana
+    width1 = 9
+    height1 = 9
+    width_height_1 = (width1, height1)
+    plt.figure(3,figsize=width_height_1)
+    plt.figure(3).canvas.set_window_title('Ruta más corta desde el nodo [' + origen + '] hasta [' + destino + ']' ) 
+    plt.clf()
+            
+
+    for u, v, d in Grafo.edges(data=True):
+        d['weight'] = float( d[peso] ) 
+                    
+
+    
+    
+    
+    #Se pintan los nodos de la solucion
+    colorNodosSolucion = []
+    for node in Grafo:
+        #Si esta en la ruta lo pinto de color 
+        if str(node) in ruta:
+             colorNodosSolucion.append('lawngreen')
+        else :
+             colorNodosSolucion.append('grey')
+    
+    #Para pintar los enlaces solucion
+    enlacesSolucion = []
+    for indiceSolucion, objetoSolucion in enumerate(ruta):
+        if indiceSolucion < len(ruta)-1:
+            enlacesSolucion.append( ( ruta[indiceSolucion], ruta[indiceSolucion+1]) )
+    
+    
+    #Para pintar los enlaces que no son solucion
+    enlacesNoSolucion= []
+    for (u,v,d) in Grafo.edges(data=True):
+        if (u, v) not in enlacesSolucion:
+            enlacesNoSolucion.append((u, v))
+    
+    
+             
+    #Mismo grafo pero pintamos los nodos distinto
+    # Retrieve the positions from graph nodes and save to a dictionary
+    pos=nx.get_node_attributes(Grafo,'pos')
+    
+    
+     
+    # Dibujamos los enlaces del Grafo 
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True)
+    # Dibujamos los enlaces Solucion del Grafo (Color Verde)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesSolucion, width=3.5, edge_color='green', arrows = True)
+     
+    # Dibujamos los atributos del Grafo 
+    nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
+      
+    
+    enlaces_etiquetas = dict()
+    # Cargamos el peso de los enlaces para poder mostarlo
+    enlaces_etiquetas =dict([((u, v),"{:.2f}".format( float( d['weight'] )) ) 
+                       for u, v, d in Grafo.edges(data=True)])
+    
+     
+    nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=enlaces_etiquetas)
+     
+    plt.axis('off')
+    plt.title("Grafo ruta más corta")
+    
+    plt.text(0, -1.5, 'La ruta más corta recomendada desde [' + origen + '] hasta  [' + destino + '] es la ruta que pasa por los nodos: ' + str(ruta), style='italic',
+                    bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
+           
+    
+    #Se pintan los nodos
+    nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodosSolucion)
+
+
+    for key in sectores:
+   
+       plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
+                   bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
+
+    # Se pinta la leyenda 
+    plt.text(0, -0.5, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Cuadrado Rojo [x]'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
+    
+
+    # Se pinta el asiento
+    dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, plt)
+
+
+    # Se pintan los datos del grafo
+    dibujarDatosEspectadorMasCorta(Grafo, espectador, plt)
+
+
+    plt.ion()
+    
+    plt.show(block=False)
+
+    plt.pause(1)
+
+
+    
+
+
+
+
 
 #Variable con las repuestas (Se usa para el formulario de atributos)
 """
@@ -716,4 +1077,10 @@ def leerSectoresCSV(fichero, Grafo):
         
     return sectores
         
+
+
+def exportarGrafoJSON(Grafo):
+    data1 = json_graph.node_link_data(Grafo)
+    with open('nodosExportados.json', 'w') as fp:
+        json.dump(data1, fp)
 

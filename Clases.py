@@ -8,6 +8,10 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import numpy
+import threading
+import time
+import random
+
 
 
 
@@ -232,8 +236,76 @@ class MenuSector(OptionMenu):
         
         
         
+
+
+class ThreadingOcupacion(object):
+    """ Threading example class
+    The run() method will be started and it will run in the background
+    until the application exits.
+    """
+
+    def __init__(self, Grafo):
+        """
+
+        Parameters
+        ----------
+        Grafo : Grafo
+            Grafo del estadio.
+        
+        Returns
+        -------
+        None.
+
+        """
+        
+        self.Grafo = Grafo
+        self._running = True
+        self._paused = False
+
+        thread = threading.Thread(target=self.run, args=())
+        thread.daemon = True                            # Daemonize thread
+        thread.start()                                  # Start the execution
+
+    def run(self):
+        """ Metodo para corren en segundo plano y modificar el peso del grafo con la ocupacion """
+        """ Si dado = 1 añado una personsa si sale 0 resto (siempre que no sea menor que cero) """
+        while self._running:
+            if not self._paused:
+                for u, v, d in self.Grafo.edges(data=True):
+                    sumarOrestar = random.randint(0, 1)
+                    if sumarOrestar == 0: #Resto 1
+                        if(d['weight'] != 0.0):
+                            d['weight'] = d['weight'] - 1
+                    else:
+                        d['weight'] = d['weight'] + 1
+                    
+                
+                time.sleep(0.2)
+        
+
+    def terminate(self):
+        """ Funcion para terminar el hilo  """
+        self._running = False
+        
+    def pause(self):
+        self._paused = True
         
         
+    def resume(self):
+        self._paused = False
+       
         
+    
+        
+class FilaFueraDerango(Exception):
+    """Raised si la fila es mayor a las filas del sector"""
+    pass
+
+class ColumnaFueraDerango(Exception):
+    """Raised si la columna es mayor a las columna del sector"""
+    pass
+        
+        
+
         
     
