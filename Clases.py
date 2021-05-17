@@ -106,7 +106,7 @@ class Asiento():
         return "El Asiento, esta en el sector %s fila: %s, columna: %s" % (self.sector.nombre, self.fila, self.columna)
         
     def nodoFinal(self, tieneProblemasDeMovilidad):
-        divisorVertical = 2
+        divisorVertical = 0.5
         if(tieneProblemasDeMovilidad == True): divisorVertical = 0.75
         
        
@@ -172,15 +172,20 @@ class Asiento():
             return
                     
         
-     
         
-        if(proyeccionHorizontal == 'IZQ'):
-            if(proyeccionVertical == 'ARR'): return self.sector.nodoArribaIzquierda
-            else: return self.sector.nodoAbajoIzquierda
+        #Para evitar un problema con el sector S12 se ha modificado la seleccion del nodo prefinal
+        # si es un asiento del S12 se recomendara siempre un nodo prefinal de la parte superior izquierda o derecha
+        if self.sector.nombre == 'S12': #CASO ESPECIAL
+            if(proyeccionHorizontal == 'IZQ'): return self.sector.nodoArribaIzquierda
+            else: return self.sector.nodoArribaDerecha
         else:
-            if(proyeccionVertical == 'ARR'): return self.sector.nodoArribaDerecha
-            else: return self.sector.nodoAbajoDerecha
-        
+            if(proyeccionHorizontal == 'IZQ'):
+                if(proyeccionVertical == 'ARR'): return self.sector.nodoArribaIzquierda
+                else: return self.sector.nodoAbajoIzquierda
+            else:
+                if(proyeccionVertical == 'ARR'): return self.sector.nodoArribaDerecha
+                else: return self.sector.nodoAbajoDerecha
+            
         
         
         
@@ -268,17 +273,26 @@ class ThreadingOcupacion(object):
 
     def run(self):
         """ Metodo para corren en segundo plano y modificar el peso del grafo con la ocupacion """
-        """ Si dado = 1 añado una personsa si sale 0 resto (siempre que no sea menor que cero) """
+        """ Si dado = 1 añado de 0 - 10 personsas si sale 0 resto de 0 - 10 (siempre que no sea menor que cero) """
         while self._running:
             if not self._paused:
                 for u, v, d in self.Grafo.edges(data=True):
                     sumarOrestar = random.randint(0, 1)
-                    if sumarOrestar == 0: #Resto 1
-                        if(d['weight'] != 0.0):
-                            d['weight'] = d['weight'] - 1
+                    ocupacionOriginal = int(d['weight'])
+                    if sumarOrestar == 0: #Resto 
+                        if(ocupacionOriginal != 0):
+                            d['weight'] = int ( ocupacionOriginal - random.randint(0, 10) )
+                            if( d['weight']  <= 0):
+                                d['weight'] = 1
+                        else:
+                            d['weight'] = 1
                     else:
-                        d['weight'] = d['weight'] + 1
-                    
+                        d['weight'] = int( ocupacionOriginal + random.randint(0, 10) )
+                #Porque un enlace A --> B no puede tener distintas personas que el mismo enlace en el otro sentido (B --> A)
+                for u, v, d in self.Grafo.edges(data=True):
+                    if(self.Grafo.has_edge(u, v) and self.Grafo.has_edge(v,u)):
+                        if (self.Grafo.get_edge_data(u,v)[0]['weight'] != self.Grafo.get_edge_data(v, u)[0]['weight'] ):
+                            d['weight'] = self.Grafo.get_edge_data(v, u)[0]['weight']
                 
                 time.sleep(0.2)
         
@@ -286,9 +300,11 @@ class ThreadingOcupacion(object):
     def terminate(self):
         """ Funcion para terminar el hilo  """
         self._running = False
+        return self.Grafo
         
     def pause(self):
         self._paused = True
+        return self.Grafo
         
         
     def resume(self):
@@ -306,6 +322,9 @@ class ColumnaFueraDerango(Exception):
     pass
         
         
+        
+        
+    
 
         
     

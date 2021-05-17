@@ -26,7 +26,7 @@ import sys
 import os
 
 import colorama
-from colorama import Fore, Style, Back
+from colorama import Fore, Style, Back, init
 
 
 #Para ignorar algunos warning de libreia deprecated
@@ -61,111 +61,118 @@ FACTOR_PLANOS = 1.56
 #Habilita el modo interactivo en pyplot para poder mostrar y continuar
 ion()
 
-#Inicializar Grafo
-G=nx.MultiDiGraph()
+
+#Se lee el grafo del fichero JSON
+G = Funciones.importarGrafoJSON(__location__ + "\\Ficheros\\nodosExportados.json",)
+
+
+
+
+# #Inicializar Grafo
+# G=nx.MultiDiGraph()
 
 # Añadimos los nodos con su posicion 
 
-#Nodo puerta
-G.add_node('P1', pos=(3, -0.5))
+# #Nodo puerta
+# G.add_node('P1', pos=(3, -0.5))
 
-#Nodo del Nivel 0
-G.add_node('01', pos=(2, 1))
-G.add_node('02', pos=(4, 1))
+# #Nodo del Nivel 0
+# G.add_node('01', pos=(2, 1))
+# G.add_node('02', pos=(4, 1))
 
-#Nodo del Nivel 1
-G.add_node('11', pos=(1, 2))
-G.add_node('12', pos=(2, 2))
-G.add_node('13', pos=(3, 2))
-G.add_node('14', pos=(4, 2))
-G.add_node('15', pos=(5, 2))
+# #Nodo del Nivel 1
+# G.add_node('11', pos=(1, 2))
+# G.add_node('12', pos=(2, 2))
+# G.add_node('13', pos=(3, 2))
+# G.add_node('14', pos=(4, 2))
+# G.add_node('15', pos=(5, 2))
 
-#Nodo del Nivel 2
-G.add_node('21', pos=(1, 3.5))
-G.add_node('22', pos=(2, 3.5))
-G.add_node('23', pos=(3, 3.5))
-G.add_node('24', pos=(4, 3.5))
-G.add_node('25', pos=(5, 3.5))
+# #Nodo del Nivel 2
+# G.add_node('21', pos=(1, 3.5))
+# G.add_node('22', pos=(2, 3.5))
+# G.add_node('23', pos=(3, 3.5))
+# G.add_node('24', pos=(4, 3.5))
+# G.add_node('25', pos=(5, 3.5))
 
-#Nodo del Nivel 3
-G.add_node('31', pos=(1, 5.5))
-G.add_node('32', pos=(3, 5.5))
-G.add_node('33', pos=(5, 5.5))
-
-
+# #Nodo del Nivel 3
+# G.add_node('31', pos=(1, 5.5))
+# G.add_node('32', pos=(3, 5.5))
+# G.add_node('33', pos=(5, 5.5))
 
 
 
 
 
-# Añadimos los enlaces con los pesos de cada uno y la etiqueta    (Esta parte se leera de un JSON y se rellenara sola)
-
-#Los de la puerta
-G.add_edge('P1','12',weight=9.0 ,  label='', tipoEnlace = 'escalera', longitud = '9.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'False' , ocupacion = '0.0' )
-G.add_edge('P1','14',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '9.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'False' , ocupacion = '0.0' )
-G.add_edge('P1','22',weight=30.0 , label='', tipoEnlace = 'escalera', longitud = '30.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'False' , ocupacion = '0.0' )
-G.add_edge('P1','24',weight=30.0 , label='', tipoEnlace = 'escalera', longitud = '30.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'False',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'False' , ocupacion = '0.0' )
-
-#Los del Nivel 0
-G.add_edge('01','12',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('01','02',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('02','01',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('02','14',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
 
-#Los del Nivel 1
-G.add_edge('11','12',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('11','21',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# # Añadimos los enlaces con los pesos de cada uno y la etiqueta    (Esta parte se leera de un JSON y se rellenara sola)
 
-G.add_edge('12','01',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('12','11',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('12','13',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# #Los de la puerta
+# G.add_edge('P1','12',weight=9.0 ,  label='', tipoEnlace = 'escalera', longitud = '9.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'False' , ocupacion = '0.0' )
+# G.add_edge('P1','14',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '9.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'False' , ocupacion = '0.0' )
+# G.add_edge('P1','22',weight=30.0 , label='', tipoEnlace = 'escalera', longitud = '30.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'False' , ocupacion = '0.0' )
+# G.add_edge('P1','24',weight=30.0 , label='', tipoEnlace = 'escalera', longitud = '30.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'False',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'False' , ocupacion = '0.0' )
 
-G.add_edge('13','12',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('13','14',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('13','23',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-
-G.add_edge('14','02',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('14','13',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('14','15',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-
-G.add_edge('15','14',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('15','25',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# #Los del Nivel 0
+# G.add_edge('01','12',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('01','02',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('02','01',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('02','14',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
 
+# #Los del Nivel 1
+# G.add_edge('11','12',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('11','21',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
-#Los del Nivel 2
-G.add_edge('21','11',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '-', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('21','22',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('21','31',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('12','01',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('12','11',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('12','13',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
-G.add_edge('22','21',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('22','23',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('13','12',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('13','14',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('13','23',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
-G.add_edge('23','13',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('23','22',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('23','24',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('23','32',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('14','02',weight=9.0 , label='', tipoEnlace = 'escalera', longitud = '10.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('14','13',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('14','15',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
-G.add_edge('24','23',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('24','25',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-
-G.add_edge('25','15',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('25','24',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('25','33',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('15','14',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('15','25',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'False', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
 
 
-#Los del Nivel 23
-G.add_edge('31','21',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '-', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('31','32',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# #Los del Nivel 2
+# G.add_edge('21','11',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '-', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('21','22',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('21','31',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '+', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
-G.add_edge('32','23',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('32','31',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('32','33',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('22','21',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('22','23',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
-G.add_edge('33','25',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
-G.add_edge('33','32',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('23','13',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('23','22',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('23','24',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('23','32',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+
+# G.add_edge('24','23',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('24','25',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+
+# G.add_edge('25','15',weight=20.0 , label='', tipoEnlace = 'escalera', longitud = '20.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('25','24',weight=10.0 , label='', tipoEnlace = 'plano', longitud = '10.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('25','33',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '+', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+
+
+
+# #Los del Nivel 23
+# G.add_edge('31','21',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '-', barandilla = 'True', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('31','32',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+
+# G.add_edge('32','23',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('32','31',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('32','33',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+
+# G.add_edge('33','25',weight=25.0 , label='', tipoEnlace = 'escalera', longitud = '25.0' , inclinacion = '-', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'False', pasilloVentildo = 'True', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
+# G.add_edge('33','32',weight=20.0 , label='', tipoEnlace = 'plano', longitud = '20.0' , inclinacion = '', barandilla = 'False', pasilloBuenEstado = 'True',  pasilloAmplio = 'True', pasilloVentildo = 'False', pasilloSeco = 'True', pasilloIluminado = 'True' , ocupacion = '0.0' )
 
 
 
@@ -193,10 +200,10 @@ for node in G:
          
          
 
-sectores = Funciones.leerSectoresCSV(__location__ + "//Ficheros//Sectores.csv", G)
+sectores = Funciones.leerSectoresCSV(__location__ + "\\Ficheros\\Sectores.csv", G)
 
 
-plotGeneral = Funciones.DibujarGrafoGeneral(G, color_map, True, sectores , 'weight')
+plot_General = Funciones.DibujarGrafoGeneral(G, color_map, True, sectores , 'weight')
 
 
 
@@ -274,16 +281,21 @@ destino = espectador.nodoPrefinal
 asiento = Clases.Asiento(sectorEspectador, fila, columna)
 
 # Se dibuja el asiento en la figura
-Funciones.dibujarAsientoGrafoGeneral(G, sectores, asiento, plotGeneral)      
+posiconNodoPrefinal, posicionUnion, posicionAsiento = Funciones.dibujarAsientoGrafoGeneral(G, sectores, asiento, destino, plot_General)  
 
+
+
+# Funciones.dibujarRectaNodoPrefinal_Asiento(posiconNodoPrefinal, posicionUnion, posicionAsiento, plot_General)
+listaNodoPrefinal_Asiento = [posiconNodoPrefinal, posicionUnion, posicionAsiento]
 
 #Se dibujan los datos del espectador
-Funciones.dibujarDatosEspectadorGeneral(G, espectador, plotGeneral)
+Funciones.dibujarDatosEspectadorGeneral(G, espectador, plot_General)
 
 
 
 print("")
-print("Se ha actualizado el grafo para mostrar su asiento.")
+print(Fore.GREEN + "\033[1m" + "Se ha actualizado el grafo para representar su asiento." + "\033[0m")
+init(autoreset=True)
 print("")
 
 
@@ -341,8 +353,10 @@ while True:
                 continue
             
            
-            Funciones.DibujarGrafoMasCorta(G_MasCorta, False, origen, destino, djk_Ruta_MasCorta[1], espectador, sectores, asiento)
+            plot_MasCorta = Funciones.DibujarGrafoMasCorta(G_MasCorta, False, origen, destino, djk_Ruta_MasCorta[1], espectador, sectores, asiento, listaNodoPrefinal_Asiento)
     
+
+
             
             #Limpieza de variables
             G_MasCorta = None
@@ -403,7 +417,10 @@ while True:
             
 
             
-            Funciones.DibujarGrafoMasRapida(G_MasRapida, False, origen, destino, djk_Ruta_MasRapida[1], espectador, sectores, asiento)
+            plot_MasRapida = Funciones.DibujarGrafoMasRapida(G_MasRapida, False, origen, destino, djk_Ruta_MasRapida[1], espectador, sectores, asiento, listaNodoPrefinal_Asiento)
+    
+           
+    
     
             
             #Limpieza de variables
@@ -512,9 +529,10 @@ while True:
     
     
     
-    
-                Funciones.DibujarGrafoAtributos(G_Atributos, False, origen, destino,djk_Ruta_Atributos[1],espectador ,sectores, asiento)
-    
+                
+                plot_Atributos = Funciones.DibujarGrafoAtributos(G_Atributos, False, origen, destino,djk_Ruta_Atributos[1],espectador ,sectores, asiento, listaNodoPrefinal_Asiento)
+
+
                            
     
     
@@ -551,7 +569,7 @@ while True:
         else:
             
             #Se hace una copia del grafo G orginal para poder modificarlo
-            global G_ControlDeAglomeraciones 
+            G_ControlDeAglomeraciones  = None
             G_ControlDeAglomeraciones = G.copy()
             
             recorridoOcupacion = []
@@ -568,66 +586,88 @@ while True:
             for u, v, d in G_ControlDeAglomeraciones.edges(data=True):
                 d['weight'] =  float( d['ocupacion'] ) 
             
-            
             nodoParado = origen
             recorridoOcupacion.append(nodoParado)
             
             
+
+      
+
             #Bucle hasta que no se llegue al nodo prefinal
             #Lanzar hilo con simulacion
             hilo = Clases.ThreadingOcupacion(G_ControlDeAglomeraciones)
-            print(Fore.YELLOW + "\nEspere un momento. Se esta rellenando la grada para la sumulación.")
-            time.sleep(3)
+            print(Fore.YELLOW + "\n\n\nEspere un momento. Se esta rellenando la grada para la simulación.")
+            time.sleep(5)
             
+            init(autoreset=True)
+            print("Listo. Su nodo prefinal es el nodo: " + destino )
                  
             #Hasta que no se llegue al destino se sigue preguntando cuando quiere el usuario parar
             #Es decir el ENTER del usuario corresponde a que esta en ese nodo parado esperando indicaciones
-            while(True):
+            while(nodoParado != destino):
                 
                 #Pauso el hilo hasta que el usuario diga
-                hilo.pause()
+                G_ControlDeAglomeracionesParado = hilo.terminate()
+        
+                #Dibujo el grafo en ese momento
+                plot_Ocupacion = Funciones.DibujarGrafoOcupacion(G_ControlDeAglomeracionesParado, False, origen, destino, espectador ,sectores, asiento, listaNodoPrefinal_Asiento, nodoParado)
 
             
                 print(Fore.CYAN  + "\n\nEsta parado en el nodo " + str(nodoParado) )
-                input(Fore.GREEN +"Presiona ENTER para obtener la siguiente dirección...")
-                
+                init(autoreset=True)
+            
                 # se hace el calculo de la ruta en ese momento
-                djk_Ruta_Ocupacion = nx.bidirectional_dijkstra(G_ControlDeAglomeraciones, source=nodoParado, target=destino, weight='weight')
+                djk_Ruta_Ocupacion = nx.bidirectional_dijkstra(G_ControlDeAglomeracionesParado, source=nodoParado, target=destino, weight='weight')
+               
+                #Se tiene que borrar un enlace (en ambos sentidos) una vez realizado [sino podriamos tener ciclos infinitos]
+                G_ControlDeAglomeracionesParado.remove_edge(djk_Ruta_Ocupacion[1][0], djk_Ruta_Ocupacion[1][1])
+                
+                if(G_ControlDeAglomeracionesParado.has_edge(djk_Ruta_Ocupacion[1][1], djk_Ruta_Ocupacion[1][0])):
+                    G_ControlDeAglomeracionesParado.remove_edge(djk_Ruta_Ocupacion[1][1], djk_Ruta_Ocupacion[1][0])
+                
+                
                 # se obtione el nodo siguiente en función de la ocupación en ese momento
                 nodoParado = djk_Ruta_Ocupacion[1][1]
-                
+               
                 recorridoOcupacion.append(nodoParado)
                 
-                if(nodoParado != destino):
-                    print(Fore.BLUE + "\n   >>> Debe caminar hasta el nodo: " + nodoParado)
-                    
-                    #Se reanuda el hilo que simula la ocupacion
-                    hilo.resume()
-                    #Se duerme para simular el caminar
-                    print(Fore.YELLOW + "Espere un momento. Se esta simulando su trayecto.")
-                    time.sleep(3)                
-                else:
-                    break
-                    
+                print(Fore.BLUE + "\n>>>>>Debe caminar hasta el nodo: " + nodoParado )
+                init(autoreset=True)
+                
+                input("Presione ENTER para simular la acción de caminar...")
+                
+                #Se reanuda el hilo que simula la ocupacion
+                hilo = Clases.ThreadingOcupacion(G_ControlDeAglomeracionesParado)
+
+                
+                #Se duerme para simular el caminar
+                print(Fore.YELLOW + "Espere un momento. Se esta simulando su trayecto.")
+                init(autoreset=True)
+                time.sleep(5)  
+                
+                
             
                 
                 
             # Se para el hilo que rellena el grafo con la ocupacion
-            hilo.terminate()
+            G_ControlDeAglomeracionesParado = hilo.terminate()
+        
+        
+            plot_Ocupacion = Funciones.DibujarGrafoOcupacion(G_ControlDeAglomeracionesParado, False, origen, destino, espectador ,sectores, asiento, listaNodoPrefinal_Asiento, nodoParado, True)
             
 
             
             print(Fore.GREEN + "\n\nHas llegado al nodo prefinal a traves de la ruta: " + str(recorridoOcupacion))
+            init(autoreset=True)
             
             
-            print(Fore.WHITE + "")
             
             #Limpieza de variables
             # G_ControlDeAglomeraciones = None
             
 
     
-            rutaMasRapida = False     
+            simularRutaConControlDeOcupaciones = False     
             
            
     
