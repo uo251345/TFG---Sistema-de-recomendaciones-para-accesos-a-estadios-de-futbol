@@ -79,6 +79,7 @@ class Asiento():
     
     #Las filas se enumeran de izquierda a derecha
     proyeccionHorizontal = None
+    
     def __init__(self, sector, fila, columna):
         """
 
@@ -100,14 +101,50 @@ class Asiento():
         self.sector = sector
         self.fila = fila
         self.columna = columna
+        self.enlaceProyeccion = self.enlaceProyeccion()
 
 
     def __repr__(self):
         return "El Asiento, esta en el sector %s fila: %s, columna: %s" % (self.sector.nombre, self.fila, self.columna)
+    
+    def enlaceProyeccion(self):
+        proyeccionHorizontal = None
+         #Primero se mira si tiene enlaces derecha o izquierda        
         
-    def nodoFinal(self, tieneProblemasDeMovilidad):
+        if (self.sector.existeEnlaceIzquierdo() == True or self.sector.existeEnlaceDerecho() == True):
+        
+            #Se mira cual es el lado mas próximo (izquierda o derecha)
+            #Si es menor que la mitad de las columnas lado izquierdo (SI EXISTE)
+            if (self.columna < (self.sector.columnas/2)) and self.sector.existeEnlaceIzquierdo():
+                proyeccionHorizontal = 'IZQ'
+                
+            #Si no existe el izquierdo sera el derecho
+            if (self.columna < (self.sector.columnas/2)) and self.sector.existeEnlaceIzquierdo() == False:
+                proyeccionHorizontal = 'DER'
+                
+            
+            #Sino lado derecho (Si existe)
+            if (self.columna >= (self.sector.columnas/2)) and self.sector.existeEnlaceDerecho():
+                proyeccionHorizontal = 'DER'
+                
+            
+            #Si no existe al izquierda
+            if (self.columna >= (self.sector.columnas/2)) and self.sector.existeEnlaceDerecho() == False:
+                proyeccionHorizontal = 'IZQ'
+                
+                    
+                    
+        else:
+            raise Exception("ERROR, No tiene enlace derecho ni izquierdo.")
+            return
+        
+        if(proyeccionHorizontal == 'IZQ'): return (self.sector.nodoArribaIzquierda, self.sector.nodoAbajoIzquierda)
+        else: return (self.sector.nodoArribaDerecha, self.sector.nodoAbajoDerecha)
+        
+        
+    
+    def nodoPrePreFinal(self):
         divisorVertical = 0.5
-        if(tieneProblemasDeMovilidad == True): divisorVertical = 0.75
         
        
        
@@ -150,7 +187,6 @@ class Asiento():
         
         #Se mira cual es el lado mas próximo (arriba o abajo)
         #Si es menor que la mitad de las columnas lado abajo (SI EXISTE)
-        #Si tiene problemas de movilidad se subira hasta 3/4
         filaLimiteFloatNumpy = numpy.around(self.sector.filas*divisorVertical, decimals=0 )
         filaLimiteIntNumpy = filaLimiteFloatNumpy.astype(int)
         filaLimiteVertical = filaLimiteIntNumpy.item()
@@ -193,7 +229,7 @@ class Asiento():
 class Espectador:
     """Clase para crear un objeto espectador al que se recomendara una ruta"""
     
-    def __init__(self, ID, asiento, puertaEntrada, tieneProblemasDeMovilidad):
+    def __init__(self, ID, asiento, puertaEntrada):
         """
 
         Parameters
@@ -204,8 +240,6 @@ class Espectador:
             Asiento al que quiere llegar.
         puertaEntrada : String
             Puerta por la que accede al estadio
-        tieneProblemasDeMovilidad: Boolean
-            True si tiene problemas de movilidad, False en otro caso
 
         Returns
         -------
@@ -216,14 +250,15 @@ class Espectador:
         self.ID = ID
         self.asiento = asiento
         self.puertaEntrada = puertaEntrada
-        self.tieneProblemasDeMovilidad = tieneProblemasDeMovilidad
-        self.nodoPrefinal = self.asiento.nodoFinal(self.tieneProblemasDeMovilidad)
-        
+        self.nodoPrePrefinal = self.asiento.nodoPrePreFinal()
+        self.nodoPrefinal = None
         
     def __repr__(self):
         return "Espectador: %s --> %s, Entra por la puerta: %s y llegará al nodo: %s" % (self.ID, self.asiento, self.puertaEntrada, self.nodoPrefinal)
         
         
+    def setNodoPreFinal(self, nodoPrefinal):
+        self.nodoPrefinal = nodoPrefinal
         
 class MenuSector(OptionMenu):
     def __init__(self, master, status, *options):

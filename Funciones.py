@@ -31,6 +31,9 @@ import threading
 import time
 
 
+import numpy
+
+
 import Clases
 
 import copy
@@ -47,7 +50,11 @@ from sys import exit
 divisior_atributos = 6
     
 
+#Clases auxiliares para las funciones (Deben estar en este fichero por problemas de accesibilidad de python)
 class MenuAtributosPersonales(OptionMenu):
+    """
+    Clase para crear un menú de atributos a puntuar
+    """
     def __init__(self, master, status, *options):
         self.var = StringVar(master)
         self.var.set(status)
@@ -63,9 +70,10 @@ class MenuAtributosPersonales(OptionMenu):
     
     
 
-
 class Respuestas:
-    
+    """
+    Clase para las respuestas del menú de atributos
+    """
     
     def __init__(self):
         self.cancelado = True
@@ -84,9 +92,31 @@ class Respuestas:
         self.f_pasilloIluminados = 1
         
         
-        
     
     def rellenar(self, escalerasConBarandillas, escalerasEnBuenEstado, pasillosAmplios, pasillosVentilados, pasillosSecos, pasilloIluminados):
+        """
+        Función para rellenar los campos de las respuestas
+
+        Parameters
+        ----------
+        escalerasConBarandillas : Integer
+            Valor respondido para este campo.
+        escalerasEnBuenEstado : Integer
+            Valor respondido para este campo.
+        pasillosAmplios : Integer
+            Valor respondido para este campo.
+        pasillosVentilados : Integer
+            Valor respondido para este campo.
+        pasillosSecos : Integer
+            Valor respondido para este campo.
+        pasilloIluminados : Integer
+            Valor respondido para este campo.
+
+        Returns
+        -------
+        None.
+
+        """
         self.cancelado = False
         self.escalerasConBarandillas = escalerasConBarandillas
         self.escalerasEnBuenEstado = escalerasEnBuenEstado
@@ -120,77 +150,54 @@ class Respuestas:
 
 
 class ventanaAtributosPersonales():
-    
+    """
+    Clase par dibujar una ventana con los atributos a puntuar
+    """
     
     def __init__(self):
 
         #Mostramos el formulario de consulta
         self.root = Tk()
         
-        
-        # Sacamos las dimensiones de la pantilla
+        #Sacamos las dimensiones de la pantilla
         windowWidth = self.root.winfo_reqwidth()
         windowHeight = self.root.winfo_reqheight()
-        
-         
-        # Gets both half the screen width/height and window width/height
+
+        #Se saca la mitar horizontal y verticar de la pantalla para centrarla
         posicionDerecha = int(self.root.winfo_screenwidth()/2 - windowWidth/2)
         posicionAbajo = int(self.root.winfo_screenheight()/2 - windowHeight/2)
          
-        # Positions the window in the center of the page.
+        #Se centra la pantalla
         self.root.geometry("+{}+{}".format(posicionDerecha, posicionAbajo))
 
-
-
-
+        #Se da el tamaño a la ventana y el título
         self.root.geometry("600x400")
         self.root.title("Recomendación personal según atributos de los pasillos.")
         #self.root.resizable(False, False)
         Label(self.root, text="Puntue del 0 al 5 los atributos de la ruta recomendada.", font="ar 15 bold").place(x=5, y=25)
         Label(self.root, text="[0 - Sin importancia, 5 - Muy importante]", font="ar 12 normal").place(x=10, y=50)
         
-        
-        
-        
-        #Preguntas de los atributos
-        
+        #Se muestarn las preguntas de los atributos en labels 
         escalerasConBarandillas_Label = Label(self.root, text="Escaleras con barandillas: ", font="ar 12 normal", relief=RIDGE, width=25, anchor='e').place(x=40, y=101)
         escalerasEnBuenEstado_Label = Label(self.root, text="Escaleras en buen estado: ", font="ar 12 normal", relief=RIDGE, width=25, anchor='e').place(x=40, y=131)
         pasillosAmplios_Label = Label(self.root, text="Pasillos amplios: ", font="ar 12 normal", relief=RIDGE, width=25, anchor='e').place(x=40, y=161)
         pasillosVentilados_Label = Label(self.root, text="Pasillos ventilados: ", font="ar 12 normal", relief=RIDGE, width=25, anchor='e').place(x=40, y=191)
         pasillosSecos_Label = Label(self.root, text="Pasillos secos: ", font="ar 12 normal", relief=RIDGE, width=25, anchor='e').place(x=40, y=221)
         pasillosSecos_Label = Label(self.root, text="Pasillos bien iluminados: ", font="ar 12 normal", relief=RIDGE, width=25, anchor='e').place(x=40, y=251)
-        
-    
-        
-        
+
         #Desplegables para seleccionar valores
-        
         escalerasConBarandillas_combo = MenuAtributosPersonales(self.root, "0","0","1","2","3","4","5")
         escalerasConBarandillas_combo.place(x=270, y=101)
-            
-        
         escalerasEnBuenEstado_combo = MenuAtributosPersonales(self.root, "0","0","1","2","3","4","5")
         escalerasEnBuenEstado_combo.place(x=270, y=131)
-    
-            
         pasillosAmplios_combo = MenuAtributosPersonales(self.root, "0","0","1","2","3","4","5")
-        pasillosAmplios_combo.place(x=270, y=161)  
-    
-    
+        pasillosAmplios_combo.place(x=270, y=161) 
         pasillosVentilados_combo = MenuAtributosPersonales(self.root, "0","0","1","2","3","4","5")
-        pasillosVentilados_combo.place(x=270, y=191)
-    
-            
+        pasillosVentilados_combo.place(x=270, y=191)   
         pasillosSecos_combo = MenuAtributosPersonales(self.root, "0","0","1","2","3","4","5")
         pasillosSecos_combo.place(x=270, y=221)
-        
-                
         pasillosiluminados_combo = MenuAtributosPersonales(self.root, "0","0","1","2","3","4","5")
         pasillosiluminados_combo.place(x=270, y=251)
-    
-        
-        # respuestas['escalerasConBarandillas'] = escalerasConBarandillas_combo.var.get()
         
         #Boton para confirmar
         botonConfirmar = Button(self.root, text="Confirmar", width = 20, bg="green" ,command=lambda:botonAtributosPersonalesClick(self,escalerasConBarandillas_combo.var.get(),escalerasEnBuenEstado_combo.var.get() ,pasillosAmplios_combo.var.get() ,pasillosVentilados_combo.var.get() ,pasillosSecos_combo.var.get(),pasillosiluminados_combo.var.get()))
@@ -231,124 +238,30 @@ class ventanaAtributosPersonales():
             self.quit()
     
     
-    
-
-class ventanaPerfilEspectador():
-    
-    
-    
-    def __init__(self):
-
-        #Mostramos el formulario de consulta
-        self.root = Tk()
-        
-        
-        # Sacamos las dimensiones de la pantilla
-        windowWidth = self.root.winfo_reqwidth()
-        windowHeight = self.root.winfo_reqheight()
-        
-         
-        # Gets both half the screen width/height and window width/height
-        posicionDerecha = int(self.root.winfo_screenwidth()/2 - windowWidth/2)
-        posicionAbajo = int(self.root.winfo_screenheight()/2 - windowHeight/2)
-         
-        # Positions the window in the center of the page.
-        self.root.geometry("+{}+{}".format(posicionDerecha, posicionAbajo))
-
-
-
-
-        self.root.geometry("600x300")
-        self.root.title("Perfil del espectador.")
-        #self.root.resizable(False, False)
-        Label(self.root, text="Datos del espectador.", font="ar 15 bold").place(x=5, y=25)
-
-        #Datos
-        Label(self.root, text="Sector:", font="ar 12 normal").place(x=10, y=50)
-        sector = Clases.MenuSector(self.root, "S11","S11","S12","S21","S22","S31","S32").place(x=80, y=50)
-        Label(self.root, text="Fila:", font="ar 12 normal").place(x=10, y=100)
-        fila = Entry(self.root).place(x=80, y=100)
-        Label(self.root, text="Columna:", font="ar 12 normal").place(x=10, y=150)
-        columna = Entry(self.root).place(x=80, y=150)
-        Label(self.root, text="Puerta:", font="ar 12 normal").place(x=10, y=200)
-        puerta = Entry(self.root).place(x=80, y=200)
-        
-
 
         
-        #Boton para confirmar
-        botonConfirmar = Button(self.root, text="Confirmar", width = 20, bg="green" ,command=self.root.destroy)
-        botonConfirmar.place(x=270, y=250)
-        
-        self.center(self.root)
-        self.root.protocol("WM_DELETE_WINDOW", self.close_window)
-        self.root.mainloop()
-        
-        
-        print(sector.var.get())
-             
-        
-        self.espectador = Clases.Espectador(uuid.uuid4(), Clases.Asiento(self.sector.var.get(), self.fila.get(), self.columna.get()), self.puerta.get())
-        
-        print(self.espectador)
-        
-        
-        
-        
-        return
-    
-    def center(self, window):
-        """
-        Para centrar la ventana
-        """
-        window.update_idletasks()
-        width = window.winfo_width()
-        frm_width = window.winfo_rootx() - window.winfo_x()
-        win_width = width + 2 * frm_width
-        height = window.winfo_height()
-        titlebar_height = window.winfo_rooty() - window.winfo_y()
-        win_height = height + titlebar_height + frm_width
-        x = window.winfo_screenwidth() // 2 - win_width // 2
-        y = window.winfo_screenheight() // 2 - win_height // 2
-        window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-        window.deiconify()
-    
-    
-    def quit(self):
-        self.root.quit()
-        self.root.destroy()
-        
-    def close_window(self):
-        respusta_cerrar = messagebox.askokcancel(message="¿Desea terminar la ejecución del programa?", title="Terminar ejecución")
-        
-        if respusta_cerrar:
-            self.quit()
-    
-    
 
-    
-        
-
-def DibujarGrafoGeneral(Grafo, colorNodos, mostrarPesos, sectores, peso='weight'):
+def DibujarGrafoGeneral(Grafo, mostrarPesos, sectores, peso='weight'):
     """
+    Función para dibujar el grafo General
 
     Parameters
     ----------
     Grafo : networkx.classes.multidigraph.MultiDiGraph
         Grafo a dibujar.
-    colorNodos : list
-        Lista con el color de los nodos.
     mostrarPesos : bool
         Boolean - True si se muestran los Pesos
+    sectores : Lista
+        Sectores del grafo
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
 
     Returns
     -------
-    Plot donde se dibuja.
+    Plot donde se ha dibujado.
 
     """
-     #Nueva ventana
+    #Nueva ventana
     width0 = 9
     height0 = 9
     width_height_0 = (width0, height0)
@@ -361,7 +274,7 @@ def DibujarGrafoGeneral(Grafo, colorNodos, mostrarPesos, sectores, peso='weight'
         d['weight'] = float( d[peso] ) 
                     
     
-    #Para pintar los enlaces solucion
+    #Para pintar los diferentes enlaces
     enlacesPasillos = []
     enlacesPasillosConBarandillas = []
     enlacesEscaleras = []
@@ -378,14 +291,33 @@ def DibujarGrafoGeneral(Grafo, colorNodos, mostrarPesos, sectores, peso='weight'
                 enlacesEscalerasConBarandillas.append((u, v))
             else: enlacesEscaleras.append((u, v))
             
+            
+    #Color de los grafos
+    color_map = []
+    for node in Grafo:
+        if str(node)[0] == "0":
+             #print("aqui 0")
+             color_map.append('cyan')
+        elif str(node) == 'P1':
+            color_map.append('green')
+        elif str(node)[0] == "1":
+             #print("aqui 1")
+             color_map.append('sandybrown')
+        elif str(node)[0] == "2":
+             #print("aqui 2")
+             color_map.append('yellow')
+        elif str(node) == 'NP':
+            color_map.append('lavender')
+        else :
+             #print("aqui3")
+             color_map.append('pink')
     
     
-     
     # Se sacan las posiciones de los nodos
     pos=nx.get_node_attributes(Grafo,'pos')
     
     # Se dibujan los nodos
-    nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodos)
+    nx.draw_networkx_nodes(Grafo,pos,node_size=400, node_color=color_map)
     
     # Se dibujan los 4 tipos de enlaces
     # Pasillos sin barandilla (color Verde)
@@ -397,40 +329,32 @@ def DibujarGrafoGeneral(Grafo, colorNodos, mostrarPesos, sectores, peso='weight'
     # Escaleras con barandilla (color verde Oscuro)
     nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesEscalerasConBarandillas,   edge_color='darkblue', arrows = True)
      
-    # Draw node labels
+    # Se dibujan las etiquetas del grafo
     nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
 
-
-
+    # Se muestran los pesos si esta True la variable
     if mostrarPesos:
         # Dibujar los pesos
-        edge_labels =dict([((u, v), d['weight']) 
+        edge_labels =dict([((u, v), "{:.2f}".format( float( d['weight'] )) ) 
                        for u, v, d in Grafo.edges(data=True)])
      
-        nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=edge_labels)
+        nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=edge_labels, font_size=7)
         
     else:
         nx.draw_networkx_edge_labels(Grafo, pos)
         
         
-        
-    #Se muestran los sectores
+    #Se muestran los sectores en textos
     for key in sectores:
-    
         plt.text(getattr(sectores[key],'posicion')[0]-0.35, getattr(sectores[key],'posicion')[1]-0.2, key + "\nFilas: " + str(getattr(sectores[key],'filas')) + "\nColumnas: " + str(getattr(sectores[key],'columnas')) , style='italic', fontweight='bold',
                     bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 1})
         
-    
-    #Leyenda con los datos
-    plt.text(0, -0.8, 'LEYENDA\n' + '\nPasillos planos sin barandilla: Verde Claro' + '\nPasillos planos con barandilla: Verde Oscuro' + '\nPasillos con escaleras sin barandilla: Azul Claro' + '\nPasillos con escaleras con barandilla: Azul Oscuro' + '\n\nAsiento: Cuadrado Rojo [x]' , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
-    
 
+    #Leyenda con los datos
+    plt.text(0, -0.8, 'LEYENDA\n' + '\nPasillos planos sin barandilla: Verde Claro' + '\nPasillos planos con barandilla: Verde Oscuro' + '\nPasillos con escaleras sin barandilla: Azul Claro' + '\nPasillos con escaleras con barandilla: Azul Oscuro' + '\n\nAsiento: Asterisco Rojo ' , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
     
     plt.axis('off')
     plt.title("Grafo General")
-    
-    
-    
     plt.ion()
     plt.show(block=False)
     plt.pause(1)
@@ -439,12 +363,73 @@ def DibujarGrafoGeneral(Grafo, colorNodos, mostrarPesos, sectores, peso='weight'
     return plt
 
 
+def addnodoPrefinal(G, posicionUnion, sectorEspectador, enlacePreFinal, fila, nombreNodoPrefinal = 'NP' ):
+    """
+    Función para agregar al Grafo un nodo prefinal equivalente a la proyección del asiento en las escaleras.
 
+    Parameters
+    ----------
+    G : networkx.classes.multidigraph.MultiDiGraph
+        Grafo a actualizar.
+    posicionUnion : Tupla
+        Posicion de la proyeccion del asiento sobre el enlace de su derecha o izquierda.
+    sectorEspectador : Sector
+        Sector sobre el que se encuentra el asiento del espectador.
+    enlacePreFinal : Tupla
+        Enlace actual del grafo que se borrara para agregar el nuevo nodo Prefinal.
+    fila : Integer
+        Valor de la fila donde esta el asiento.
+    nombreNodoPrefinal : String, optional
+        Nombre del nodo prefinal resultante. Valor por defecto 'NP'.
+
+    Returns
+    -------
+    nombreNodoPrefinal : String
+        Nombre del nodo prefinal.
+
+    """
+
+    #Se redondea la posicion de la proyeccion con dos decimales
+    posicionUnion_redondeada = [round(num, 2) for num in posicionUnion]
+
+    #Se saca los datos de filas del sector y la longitud enlace,
+    filas_Sector = float(getattr(sectorEspectador, 'filas'))
+    longitud_Enlace = float(G.get_edge_data( enlacePreFinal[0], enlacePreFinal[1] )[0]['longitud'])
+    #Se calcula la nueva longitud desde el nodo prefinal hasta el nodo superior e inferior
+    longitudSuperior = ( filas_Sector - fila ) * ( longitud_Enlace / filas_Sector  )
+    longitudInferior = ( fila ) * ( longitud_Enlace / filas_Sector )
+    
+    #Datos para el nuevo nodo como copia del que se borrara (actual)
+    dataSuperior = G.get_edge_data( enlacePreFinal[0], enlacePreFinal[1] )[0]
+    dataInferior = G.get_edge_data( enlacePreFinal[1], enlacePreFinal[0] )[0]
+    
+    #Se agrega el nodo nuevo
+    G.add_node(nombreNodoPrefinal, pos=posicionUnion_redondeada)
+    
+    #Nuevo Nodo al superior
+    G.add_edge(enlacePreFinal[0] , nombreNodoPrefinal , weight = longitudSuperior, label = '', tipoEnlace = dataSuperior['tipoEnlace'], longitud = longitudSuperior , inclinacion ='-', barandilla = dataSuperior['barandilla'], pasilloBuenEstado = dataSuperior['pasilloBuenEstado'],  pasilloAmplio = dataSuperior['pasilloAmplio'], pasilloVentildo = dataSuperior['pasilloVentildo'], pasilloSeco = dataSuperior['pasilloSeco'], pasilloIluminado = dataSuperior['pasilloIluminado'] , ocupacion = dataSuperior['ocupacion'] )
+    G.add_edge(nombreNodoPrefinal, enlacePreFinal[0] , weight = longitudSuperior, label = '', tipoEnlace = dataSuperior['tipoEnlace'], longitud = longitudSuperior , inclinacion = '+', barandilla = dataSuperior['barandilla'], pasilloBuenEstado = dataSuperior['pasilloBuenEstado'],  pasilloAmplio = dataSuperior['pasilloAmplio'], pasilloVentildo = dataSuperior['pasilloVentildo'], pasilloSeco = dataSuperior['pasilloSeco'], pasilloIluminado = dataSuperior['pasilloIluminado'] , ocupacion = dataSuperior['ocupacion'] )
+    
+    #Nuevo Nodo al inferior
+    G.add_edge(nombreNodoPrefinal, enlacePreFinal[1], weight = longitudInferior, label = '', tipoEnlace = dataInferior['tipoEnlace'], longitud = longitudInferior , inclinacion = '-', barandilla = dataInferior['barandilla'], pasilloBuenEstado = dataInferior['pasilloBuenEstado'],  pasilloAmplio = dataInferior['pasilloAmplio'], pasilloVentildo = dataInferior['pasilloVentildo'], pasilloSeco = dataInferior['pasilloSeco'], pasilloIluminado = dataInferior['pasilloIluminado'] , ocupacion = dataInferior['ocupacion'] )
+    G.add_edge(enlacePreFinal[1], nombreNodoPrefinal, weight = longitudInferior, label = '', tipoEnlace = dataInferior['tipoEnlace'], longitud = longitudInferior , inclinacion = '+', barandilla = dataInferior['barandilla'], pasilloBuenEstado = dataInferior['pasilloBuenEstado'],  pasilloAmplio = dataInferior['pasilloAmplio'], pasilloVentildo = dataInferior['pasilloVentildo'], pasilloSeco = dataInferior['pasilloSeco'], pasilloIluminado = dataInferior['pasilloIluminado'] , ocupacion = dataInferior['ocupacion'] )
+    
+    #Se comprueba que existen los enlaces a borrar y se borras de Nodo A a Nodo B y viceversa    
+    if(G.has_edge(enlacePreFinal[0], enlacePreFinal[1]) ):
+       G.remove_edge(enlacePreFinal[0], enlacePreFinal[1])
+    if(G.has_edge(enlacePreFinal[1], enlacePreFinal[0]) ):
+       G.remove_edge(enlacePreFinal[1], enlacePreFinal[0])
+
+
+    return nombreNodoPrefinal
 
 
 
 def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, nodoPrefinal, plot):
     """
+    Función para dibujar el asiento en el plot.
+    Ademas se saca la posicion X e Y del asiento dibujado.
+    
     Parameters
     ----------
     Grafo : networkx.classes.multidigraph.MultiDiGraph
@@ -453,6 +438,8 @@ def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, nodoPrefinal, plot):
         Lista de Sectores.
     asiento : Asiento
         Asiento del espectador.
+    nodoPrefinal : Tupla
+        Nodo prefinal.
     plot : module
         plt donde se dibuja.
 
@@ -462,7 +449,7 @@ def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, nodoPrefinal, plot):
     """
     
     
-    #Dibujar asiento    
+    #Se sacan los atributos necesarios para los calculos   
     sector_asiento = getattr(asiento, 'sector')
     filas_sector = getattr(sector_asiento, 'filas')
     columnas_sector = getattr(sector_asiento, 'columnas')
@@ -524,58 +511,87 @@ def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, nodoPrefinal, plot):
     else: 
         longitud_enlace_derecha = longitud_enlace_derecha2
     
+    #Se saca la equivalencia entre el tamaño del pasillo y el numero de filas de este
     unidadesVertical = longitud_enlace_derecha/filas_sector
     unidadesHorizontal = longitud_enlace_arriba/columnas_sector
     
+    # Se saca la posicion del asiento 
     posicionX_asiento = Grafo.nodes()[nodo_ArribaIzquierda]['pos'][0] + (unidadesHorizontal * columna_asiento)
     posicionY_asiento = Grafo.nodes()[nodo_ArribaIzquierda]['pos'][1] - (unidadesVertical * (filas_sector - fila_asiento)) 
     
-    #Se dibuja el asiento (Se resta un offset a cada componente espacial para ajustar la posicion en la figura)
+    #Se dibuja el asientocon un * rojo
     plt.ion()
     plt.draw()
     plt.pause(0.0001)
-    plot.text(posicionX_asiento - 0.08, posicionY_asiento - 0.1, 'x', style='italic', fontweight='bold',bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 0.5})
+    plt.plot(posicionX_asiento, posicionY_asiento, marker="*", markersize=10, color="red")
     plt.pause(0.0001)
     
     
-    # Se saca la posicion del asiento en el enlace izquierda o derecha
-    posicion_Union = ( Grafo.nodes()[nodoPrefinal]['pos'][0] , posicionY_asiento )
+    # Se saca la posicion del asiento en el enlace izquierdo o derecho
+    posicion_Union = ( Grafo.nodes()[nodoPrefinal]['pos'][0] , numpy.round(posicionY_asiento, 2) )
     posicion_NodoPrefinal = (Grafo.nodes()[nodoPrefinal]['pos'][0], Grafo.nodes()[nodoPrefinal]['pos'][1])
-    return ( posicion_NodoPrefinal, posicion_Union ,(posicionX_asiento, posicionY_asiento))
+    return ( posicion_NodoPrefinal, posicion_Union ,(numpy.round( posicionX_asiento, 2 ), numpy.round( posicionY_asiento,2 )) )
     
 
-def dibujarRectaNodoPrefinal_Asiento(posiconNodoPrefinal, posicionUnion, posiconAsiento, plot):
-    #Recta nodo Prefinal proyeccion en horizontal del asiento (es decir subida o bajada de escaleras)
-    valores_x_escaleras = [posiconNodoPrefinal[0] - 0.02 , posicionUnion[0] - 0.02 ] 
-    valores_y_escaleras = [posiconNodoPrefinal[1], posicionUnion[1]]
+def dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plot):
+    """
+    Funcion para dibujar una línea que emule el camino desde la escalera hasta el asiento.
+
+    Parameters
+    ----------
+    NodoPrefinal_pos : Tupla
+        Posiciones del nodo Prefinal.
+    Asiento_pos : Tupla
+        Posiciones del asiento.
+    plot : module
+        Plt donde se dubujara la linea.
+
+    Returns
+    -------
+    None.
+
+    """
+    
+    #Recta nodo Prefinal hasta el asiento 
+    valores_x_escaleras = [NodoPrefinal_pos[0] , Asiento_pos[0] ] 
+    valores_y_escaleras = [NodoPrefinal_pos[1], Asiento_pos[1]]
     plot.plot(valores_x_escaleras , valores_y_escaleras, linestyle = ':', color = 'red')
     
-    #Recta desde las escaleras hasta el asiento
-    valores_x_asiento_escaleras = [posicionUnion[0] - 0.02 , posiconAsiento[0] ] 
-    valores_y_asiento_escaleras = [posicionUnion[1] - 0.02, posiconAsiento[1] - 0.02]
-    plot.plot(valores_x_asiento_escaleras , valores_y_asiento_escaleras, linestyle = ':', color = 'red')
-    
+
     
     plot.ion()
     plot.draw()
     plot.pause(0.0001)
     plot.show()
+    
 
 def dibujarDatosEspectadorGeneral(Grafo, espectador, plot):
-    
+    """
+
+    Parameters
+    ----------
+    Grafo : networkx.classes.multidigraph.MultiDiGraph
+        Grafo General.
+    espectador : Espectador
+        Espectador.
+    plot : mdoule
+        Plt donde se dibuja.
+
+    Returns
+    -------
+    None.
+
+    """
     ID = "\nID: " + str(getattr(espectador, 'ID'))
     PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
     NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
-    if(str(getattr(espectador, 'tieneProblemasDeMovilidad'))) == 'True':
-        problemasMovilidad = "\nProblemas de movilidad: Sí"
-    else:
-        problemasMovilidad = "\nProblemas de movilidad: No"
+    
     
     plt.ion()
     plt.draw()
     plt.pause(0.0001)
     
-    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal + problemasMovilidad, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
     plt.pause(0.0001)
 
 
@@ -584,16 +600,13 @@ def dibujarDatosEspectadorAtributos(Grafo, espectador, plot):
     ID = "\nID: " + str(getattr(espectador, 'ID'))
     PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
     NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
-    if(str(getattr(espectador, 'tieneProblemasDeMovilidad'))) == 'True':
-        problemasMovilidad = "\nProblemas de movilidad: Sí"
-    else:
-        problemasMovilidad = "\nProblemas de movilidad: No"
+
     
     plt.ion()
     plt.draw()
     plt.pause(0.0001)
     
-    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal + problemasMovilidad, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal , style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
     plt.pause(0.0001)
 
 
@@ -602,16 +615,12 @@ def dibujarDatosEspectadorMasRapida(Grafo, espectador, plot):
     ID = "\nID: " + str(getattr(espectador, 'ID'))
     PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
     NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
-    if(str(getattr(espectador, 'tieneProblemasDeMovilidad'))) == 'True':
-        problemasMovilidad = "\nProblemas de movilidad: Sí"
-    else:
-        problemasMovilidad = "\nProblemas de movilidad: No"
-    
+
     plt.ion()
     plt.draw()
     plt.pause(0.0001)
     
-    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal + problemasMovilidad, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal , style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
     plt.pause(0.0001)
 
 
@@ -620,16 +629,13 @@ def dibujarDatosEspectadorMasCorta(Grafo, espectador, plot):
     ID = "\nID: " + str(getattr(espectador, 'ID'))
     PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
     NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
-    if(str(getattr(espectador, 'tieneProblemasDeMovilidad'))) == 'True':
-        problemasMovilidad = "\nProblemas de movilidad: Sí"
-    else:
-        problemasMovilidad = "\nProblemas de movilidad: No"
+
     
     plt.ion()
     plt.draw()
     plt.pause(0.0001)
     
-    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal + problemasMovilidad, style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
+    plot.text(3.5, -0.5, 'DATOS ESPECTADOR\n' + ID + PuertaEntrada + NodoPrefinal , style='italic', fontweight='normal',bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 2})
     plt.pause(0.0001)
     
 
@@ -642,7 +648,6 @@ def botonAtributosPersonalesClick(ventana_self,escalerasConBarandillas,escaleras
     
     y modificar el diccionario respuestas
 
-
     """
     
     
@@ -652,9 +657,9 @@ def botonAtributosPersonalesClick(ventana_self,escalerasConBarandillas,escaleras
     ventana_self.quit()
 
 
-
-def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sectores, asiento, listaNodoPrefinal_Asiento, nodoParado, dibujarEnlacePrefinalAsiento = False,  peso='weight'):
+def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sectores, asiento, nodoParado, dibujarEnlacePrefinalAsiento = False, NodoPrefinal_pos = None, Asiento_pos = None ,peso='weight'):
     """
+    Funcion para dibujar el grafo de atributos
     
     Parameters
     ----------
@@ -672,21 +677,23 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
         Lista de Sector.
     asiento : Asiento
         Asiento al que se accede.
-    listaNodoPrefinal_Asiento : Lista
-        Lista con las posiciones del nod prefinal, asiento y su proyeccion horizontal.
     nodoParado : String
         Nodo en el que esta parado el usuario.
     dibujarEnlacePrefinalAsiento : Boolean, optional
         Bool para dibujar el enlace del nodo prefinal al asiento. (Default: False)
+    NodoPrefinal_pos : Tupla, optional
+        Posicion del nodo Prefinal. (Default: None)
+    Asiento_pos : Tupla, optional
+        Posicion del asiento. (Default: None)
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
         
+    Returns
+    -------
+    Plt donde se dibujo.
+        
     """
 
-
-
-    
-    
     #Nueva ventana
     width1 = 9
     height1 = 9
@@ -695,13 +702,10 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
     plt.figure(5).canvas.set_window_title('Grafo de ocupaciones' ) 
     plt.clf()
             
-
+    # Se rellena el peso del grafo 
     for u, v, d in Grafo.edges(data=True):
         d['weight'] = float( d[peso] ) 
                     
-
-    
-    
     
     #Se pintan los nodos de la solucion
     colorNodosSolucion = []
@@ -713,8 +717,6 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
              colorNodosSolucion.append('grey')
     
     
-    
-    
     #Para pintar los enlaces que no son solucion
     enlacesNoSolucion= []
     for (u,v,d) in Grafo.edges(data=True):
@@ -722,12 +724,9 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
     
     
              
-    #Mismo grafo pero pintamos los nodos distinto
-    # Retrieve the positions from graph nodes and save to a dictionary
+    #Se sacan las posiciones de los nodso
     pos=nx.get_node_attributes(Grafo,'pos')
     
-    
-     
     # Dibujamos los enlaces del Grafo 
     nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True)
      
@@ -740,51 +739,41 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
     enlaces_etiquetas =dict([((u, v), str(int( d['weight'] )) ) 
                        for u, v, d in Grafo.edges(data=True)])
     
-     
+    #Se dibujan las etiquetas
     nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=enlaces_etiquetas)
      
     plt.axis('off')
     plt.title("Grafo con ocupaciones")
     
-          
-    
     #Se pintan los nodos
     nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodosSolucion)
 
-
+    # Se muestran los sectores
     for key in sectores:
    
        plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
                    bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
 
-    # Se pinta la leyenda 
-    # plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Cuadrado Rojo [x]' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'   , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
-    
 
     # Se pinta el asiento
     dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, destino, plt)
 
-
-    # Se pintan los datos del grafo
-    # dibujarDatosEspectadorMasRapida(Grafo, espectador, plt)
-
-
+    #Si esta a True se muestra en enlace desde las escaleras hasta el asiento
     if(dibujarEnlacePrefinalAsiento):
         # Se dibujan los enlaces del nodo prefinal al asiento
-        dibujarRectaNodoPrefinal_Asiento(listaNodoPrefinal_Asiento[0], listaNodoPrefinal_Asiento[1], listaNodoPrefinal_Asiento[2] , plt)
+        dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt)
 
     plt.ion()
-    
     plt.show(block=False)
-
     plt.pause(1)
 
     return plt
 
 
 
-def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, listaNodoPrefinal_Asiento, peso='weight'):
+def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
     """
+    Función pará pintar el grafo segun atributos.
     
     Parameters
     ----------
@@ -804,17 +793,14 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
         Lista de Sector.
     asiento : Asiento
         Asiento al que se accede.
-    listaNodoPrefinal_Asiento : Lista
-        Lista con las posiciones del nod prefinal, asiento y su proyeccion horizontal.
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
         
     Returns
     -------
-    Plot donde se dibuja.
+    Plt donde se dibuja.
     """
 
-    
     #Nueva ventana
     width1 = 9
     height1 = 9
@@ -824,8 +810,7 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     plt.clf()
             
             
-            
-    
+    #Se rellenan los pesos del grafo
     for u, v, d in Grafo.edges(data=True):
         d['weight'] = float( d[peso] ) 
                     
@@ -849,7 +834,6 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
              color_map.append('pink')
     
     
-    
     #Se pintan los nodos de la solucion
     colorNodosSolucion = []
     for node in Grafo:
@@ -873,15 +857,12 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
             enlacesNoSolucion.append((u, v))
     
     
-             
-    #Mismo grafo pero pintamos los nodos distinto
-    # Retrieve the positions from graph nodes and save to a dictionary
+    #Se sacan las posiciones de los nodos
     pos=nx.get_node_attributes(Grafo,'pos')
     
     # Dibujamos los nodos del Grafo 
     nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=color_map)
     
-     
     # Dibujamos los enlaces del Grafo 
     nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True)
     # Dibujamos los enlaces Solucion del Grafo (Color Verde)
@@ -891,17 +872,12 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
      
     
-    
-    
-    
-    
     enlaces_etiquetas = dict()
     # Cargamos el peso de los enlaces para poder mostarlo
     enlaces_etiquetas =dict([((u, v),"{:.2f}".format( float( d['weight'] )) ) 
                        for u, v, d in Grafo.edges(data=True)])
     
     
-     
     nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=enlaces_etiquetas)
      
     plt.axis('off')
@@ -914,16 +890,14 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     #Se pintan los nodos
     nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodosSolucion)
 
-
+    #Se pintan los sectores
     for key in sectores:
    
        plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
                    bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
 
-
     # Se pinta la leyenda 
-    plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Cuadrado Rojo [x]' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
-    
+    plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
 
     # Se pinta el asiento
     dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, destino, plt)
@@ -932,23 +906,18 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     # Se pintan los datos del grafo
     dibujarDatosEspectadorAtributos(Grafo, espectador, plt)
     
-    # Se dibujan los enlaces del nodo prefinal al asiento
-    dibujarRectaNodoPrefinal_Asiento(listaNodoPrefinal_Asiento[0], listaNodoPrefinal_Asiento[1], listaNodoPrefinal_Asiento[2] , plt)
-
-
+    
 
     plt.ion()
-    
     plt.show(block=False)
-
     plt.pause(1)
-
 
     return plt
 
 
-def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, listaNodoPrefinal_Asiento, peso='weight'):
+def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
     """
+    Función pará pintar el grafo con la ruta más rapida.
     
     Parameters
     ----------
@@ -968,10 +937,11 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
         Lista de Sector.
     asiento : Asiento
         Asiento al que se accede.
-    listaNodoPrefinal_Asiento : Lista
-        Lista con las posiciones del nod prefinal, asiento y su proyeccion horizontal.
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
+    
+    Returns
+    plt donde se dibujo
         
     """
 
@@ -987,9 +957,6 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     for u, v, d in Grafo.edges(data=True):
         d['weight'] = float( d[peso] ) 
                     
-
-    
-    
     
     #Se pintan los nodos de la solucion
     colorNodosSolucion = []
@@ -1012,14 +979,9 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     for (u,v,d) in Grafo.edges(data=True):
         if (u, v) not in enlacesSolucion:
             enlacesNoSolucion.append((u, v))
-    
-    
-             
-    #Mismo grafo pero pintamos los nodos distinto
-    # Retrieve the positions from graph nodes and save to a dictionary
+       
+    #Se saca la posicion de los nodos
     pos=nx.get_node_attributes(Grafo,'pos')
-    
-    
      
     # Dibujamos los enlaces del Grafo 
     nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True)
@@ -1029,7 +991,6 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     # Dibujamos los atributos del Grafo 
     nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
       
-    
     enlaces_etiquetas = dict()
     # Cargamos el peso de los enlaces para poder mostarlo
     enlaces_etiquetas =dict([((u, v),"{:.2f}".format( float( d['weight'] )) ) 
@@ -1048,38 +1009,31 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     #Se pintan los nodos
     nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodosSolucion)
 
-
+    #Se muestran los sectores
     for key in sectores:
    
        plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
                    bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
 
     # Se pinta la leyenda 
-    plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Cuadrado Rojo [x]' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'   , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
-    
+    plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'   , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
 
     # Se pinta el asiento
     dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, destino, plt)
 
-
     # Se pintan los datos del grafo
     dibujarDatosEspectadorMasRapida(Grafo, espectador, plt)
 
-
-    # Se dibujan los enlaces del nodo prefinal al asiento
-    dibujarRectaNodoPrefinal_Asiento(listaNodoPrefinal_Asiento[0], listaNodoPrefinal_Asiento[1], listaNodoPrefinal_Asiento[2] , plt)
-
     plt.ion()
-    
     plt.show(block=False)
-
     plt.pause(1)
 
     return plt
 
 
-def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, listaNodoPrefinal_Asiento, peso='weight'):
+def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
     """
+    Función para dibujar el grafo con la ruta más corta
     
     Parameters
     ----------
@@ -1098,11 +1052,13 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
     sectores : Lista
         Lista de Sector.
     asiento : Asiento
-        Asiento al que se accede.
-    listaNodoPrefinal_Asiento : Lista
-        Lista con las posiciones del nod prefinal, asiento y su proyeccion horizontal.
+        Asiento del espectador.
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
+        
+    Returns
+    -------
+    Plt donde se dibuja.
         
     """
 
@@ -1114,13 +1070,10 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
     plt.figure(3).canvas.set_window_title('Ruta más corta desde el nodo [' + origen + '] hasta [' + destino + ']' ) 
     plt.clf()
             
-
+    #Se rellenan los pesos del grafo
     for u, v, d in Grafo.edges(data=True):
         d['weight'] = float( d[peso] ) 
                     
-
-    
-    
     
     #Se pintan los nodos de la solucion
     colorNodosSolucion = []
@@ -1144,14 +1097,10 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
         if (u, v) not in enlacesSolucion:
             enlacesNoSolucion.append((u, v))
     
-    
-             
-    #Mismo grafo pero pintamos los nodos distinto
-    # Retrieve the positions from graph nodes and save to a dictionary
+
+    #Se saca la posicion de los nodos
     pos=nx.get_node_attributes(Grafo,'pos')
-    
-    
-     
+
     # Dibujamos los enlaces del Grafo 
     nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True)
     # Dibujamos los enlaces Solucion del Grafo (Color Verde)
@@ -1179,32 +1128,23 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
     #Se pintan los nodos
     nx.draw_networkx_nodes(Grafo,pos,node_size=450, node_color=colorNodosSolucion)
 
-
+    #Se pintan los sectores
     for key in sectores:
    
        plt.text(getattr(sectores[key],'posicion')[0], getattr(sectores[key],'posicion')[1], key, style='italic', fontweight='bold',
                    bbox={'facecolor': 'yellow', 'alpha': 0.2, 'pad': 15})
 
     # Se pinta la leyenda 
-    plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Cuadrado Rojo [x]' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
+    plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
     
-
     # Se pinta el asiento
     dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, destino, plt)
-
 
     # Se pintan los datos del grafo
     dibujarDatosEspectadorMasCorta(Grafo, espectador, plt)
 
-
-    # Se dibujan los enlaces del nodo prefinal al asiento
-    dibujarRectaNodoPrefinal_Asiento(listaNodoPrefinal_Asiento[0], listaNodoPrefinal_Asiento[1], listaNodoPrefinal_Asiento[2] , plt)
-
-
     plt.ion()
-    
     plt.show(block=False)
-
     plt.pause(1)
 
 
@@ -1212,7 +1152,7 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
 
 
 
-
+    
 
 #Variable con las repuestas (Se usa para el formulario de atributos)
 """

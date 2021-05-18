@@ -180,30 +180,14 @@ G = Funciones.importarGrafoJSON(__location__ + "\\Ficheros\\nodosExportados.json
 
 
 
-#Color de los grafos
-color_map = []
-for node in G:
-    if str(node)[0] == "0":
-         #print("aqui 0")
-         color_map.append('cyan')
-    elif str(node) == 'P1':
-        color_map.append('green')
-    elif str(node)[0] == "1":
-         #print("aqui 1")
-         color_map.append('sandybrown')
-    elif str(node)[0] == "2":
-         #print("aqui 2")
-         color_map.append('yellow')
-    else :
-         #print("aqui3")
-         color_map.append('pink')
+
          
          
 
 sectores = Funciones.leerSectoresCSV(__location__ + "\\Ficheros\\Sectores.csv", G)
 
 
-plot_General = Funciones.DibujarGrafoGeneral(G, color_map, True, sectores , 'weight')
+plot_General = Funciones.DibujarGrafoGeneral(G, True, sectores , 'weight')
 
 
 
@@ -254,47 +238,78 @@ while True:
                 print("Actualmente solo existe la puerta de entrada P1")
 
 
-while True: 
-    try:
-        tieneProblemasDeMovilidadRespuesta = input("Tiene problemas de movilidad s/n : ")
-        if tieneProblemasDeMovilidadRespuesta.lower() == 's':
-            tieneProblemasDeMovilidad = True
-            break
-        elif tieneProblemasDeMovilidadRespuesta.lower() == 'n':
-            tieneProblemasDeMovilidad = False
-            break
-        raise ValueError()
-    except ValueError:
-        print("Selecciones si(s) o no (n).")
+# while True: 
+#     try:
+#         tieneProblemasDeMovilidadRespuesta = input("Tiene problemas de movilidad s/n : ")
+#         if tieneProblemasDeMovilidadRespuesta.lower() == 's':
+#             tieneProblemasDeMovilidad = True
+#             break
+#         elif tieneProblemasDeMovilidadRespuesta.lower() == 'n':
+#             tieneProblemasDeMovilidad = False
+#             break
+#         raise ValueError()
+#     except ValueError:
+#         print("Selecciones si(s) o no (n).")
 
         
         
-
-
-
-espectador = Clases.Espectador(uuid.uuid4(), Clases.Asiento(sectorEspectador, fila, columna), puertaEntrada, tieneProblemasDeMovilidad)
-
-origen = espectador.puertaEntrada
-destino = espectador.nodoPrefinal
-
 
 asiento = Clases.Asiento(sectorEspectador, fila, columna)
+
+espectador = Clases.Espectador(uuid.uuid4(), asiento, puertaEntrada)
+
+origen = espectador.puertaEntrada
+
+
+
+
+destino = espectador.nodoPrePrefinal
+
+enlacePreFinal = asiento.enlaceProyeccion
+
+
+
 
 # Se dibuja el asiento en la figura
 posiconNodoPrefinal, posicionUnion, posicionAsiento = Funciones.dibujarAsientoGrafoGeneral(G, sectores, asiento, destino, plot_General)  
 
 
+nombreNodoPrefinal = Funciones.addnodoPrefinal(G, posicionUnion, sectorEspectador, enlacePreFinal, fila )
 
-# Funciones.dibujarRectaNodoPrefinal_Asiento(posiconNodoPrefinal, posicionUnion, posicionAsiento, plot_General)
-listaNodoPrefinal_Asiento = [posiconNodoPrefinal, posicionUnion, posicionAsiento]
+
+espectador.setNodoPreFinal(nombreNodoPrefinal)
+
+destino = None
+destino = espectador.nodoPrefinal
+
+
+#Se sacan las posiciones del asiento y del nodo NP
+NodoPrefinal_pos = nx.get_node_attributes(G, 'pos')[destino]
+Asiento_pos = posicionAsiento
+
+
+
+#Se actualiza el grafo
+Funciones.DibujarGrafoGeneral(G, True, sectores , 'weight')
+
+
+
+
+
+Funciones.dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plot_General)
+# listaNodoPrefinal_Asiento = [posiconNodoPrefinal, posicionUnion, posicionAsiento]
 
 #Se dibujan los datos del espectador
 Funciones.dibujarDatosEspectadorGeneral(G, espectador, plot_General)
 
 
 
+posiconNodoPrefinal, posicionUnion, posicionAsiento = Funciones.dibujarAsientoGrafoGeneral(G, sectores, asiento, destino, plot_General)  
+
+
+
 print("")
-print(Fore.GREEN + "\033[1m" + "Se ha actualizado el grafo para representar su asiento." + "\033[0m")
+print(Fore.GREEN + "Se ha actualizado el grafo para representar su asiento.")
 init(autoreset=True)
 print("")
 
@@ -353,7 +368,7 @@ while True:
                 continue
             
            
-            plot_MasCorta = Funciones.DibujarGrafoMasCorta(G_MasCorta, False, origen, destino, djk_Ruta_MasCorta[1], espectador, sectores, asiento, listaNodoPrefinal_Asiento)
+            plot_MasCorta = Funciones.DibujarGrafoMasCorta(G_MasCorta, False, origen, destino, djk_Ruta_MasCorta[1], espectador, sectores, asiento)
     
 
 
@@ -417,7 +432,7 @@ while True:
             
 
             
-            plot_MasRapida = Funciones.DibujarGrafoMasRapida(G_MasRapida, False, origen, destino, djk_Ruta_MasRapida[1], espectador, sectores, asiento, listaNodoPrefinal_Asiento)
+            plot_MasRapida = Funciones.DibujarGrafoMasRapida(G_MasRapida, False, origen, destino, djk_Ruta_MasRapida[1], espectador, sectores, asiento)
     
            
     
@@ -530,7 +545,7 @@ while True:
     
     
                 
-                plot_Atributos = Funciones.DibujarGrafoAtributos(G_Atributos, False, origen, destino,djk_Ruta_Atributos[1],espectador ,sectores, asiento, listaNodoPrefinal_Asiento)
+                plot_Atributos = Funciones.DibujarGrafoAtributos(G_Atributos, False, origen, destino,djk_Ruta_Atributos[1],espectador ,sectores, asiento)
 
 
                            
@@ -610,7 +625,7 @@ while True:
                 G_ControlDeAglomeracionesParado = hilo.terminate()
         
                 #Dibujo el grafo en ese momento
-                plot_Ocupacion = Funciones.DibujarGrafoOcupacion(G_ControlDeAglomeracionesParado, False, origen, destino, espectador ,sectores, asiento, listaNodoPrefinal_Asiento, nodoParado)
+                plot_Ocupacion = Funciones.DibujarGrafoOcupacion(G_ControlDeAglomeracionesParado, False, origen, destino, espectador ,sectores, asiento, nodoParado)
 
             
                 print(Fore.CYAN  + "\n\nEsta parado en el nodo " + str(nodoParado) )
@@ -618,7 +633,8 @@ while True:
             
                 # se hace el calculo de la ruta en ese momento
                 djk_Ruta_Ocupacion = nx.bidirectional_dijkstra(G_ControlDeAglomeracionesParado, source=nodoParado, target=destino, weight='weight')
-               
+                
+                
                 #Se tiene que borrar un enlace (en ambos sentidos) una vez realizado [sino podriamos tener ciclos infinitos]
                 G_ControlDeAglomeracionesParado.remove_edge(djk_Ruta_Ocupacion[1][0], djk_Ruta_Ocupacion[1][1])
                 
@@ -653,7 +669,7 @@ while True:
             G_ControlDeAglomeracionesParado = hilo.terminate()
         
         
-            plot_Ocupacion = Funciones.DibujarGrafoOcupacion(G_ControlDeAglomeracionesParado, False, origen, destino, espectador ,sectores, asiento, listaNodoPrefinal_Asiento, nodoParado, True)
+            plot_Ocupacion = Funciones.DibujarGrafoOcupacion(G_ControlDeAglomeracionesParado, False, origen, destino, espectador ,sectores, asiento, nodoParado, True, NodoPrefinal_pos, Asiento_pos)
             
 
             
