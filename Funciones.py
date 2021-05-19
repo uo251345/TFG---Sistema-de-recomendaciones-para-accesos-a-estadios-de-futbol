@@ -425,10 +425,10 @@ def addnodoPrefinal(G, posicionUnion, sectorEspectador, enlacePreFinal, fila, no
 
 
 
-def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, nodoPrefinal, plot):
+def obtenerPosicionAsiento(Grafo, sectores, asiento, nodoPrefinal, plot):
     """
-    Función para dibujar el asiento en el plot.
-    Ademas se saca la posicion X e Y del asiento dibujado.
+    Función para sacar la posicion X e Y del asiento dibujado. 
+    Ademas se saca la posion del nodoPrefinal y de la union de ambos
     
     Parameters
     ----------
@@ -445,7 +445,7 @@ def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, nodoPrefinal, plot):
 
     Returns
     -------
-    List(posicionX_asiento, posicionY_asiento)
+    List( posicion_NodoPrefinal, posicion_Union, posicionX_asiento, posicionY_asiento )
     """
     
     
@@ -519,19 +519,26 @@ def dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, nodoPrefinal, plot):
     posicionX_asiento = Grafo.nodes()[nodo_ArribaIzquierda]['pos'][0] + (unidadesHorizontal * columna_asiento)
     posicionY_asiento = Grafo.nodes()[nodo_ArribaIzquierda]['pos'][1] - (unidadesVertical * (filas_sector - fila_asiento)) 
     
+   
+    
+    # Se saca la posicion del asiento en el enlace izquierdo o derecho
+    posicion_Union = ( Grafo.nodes()[nodoPrefinal]['pos'][0] , numpy.round(posicionY_asiento, 2) )
+    posicion_NodoPrefinal = (Grafo.nodes()[nodoPrefinal]['pos'][0], Grafo.nodes()[nodoPrefinal]['pos'][1])
+    
+    #Se actualiza el asiento añadiendo su posicion
+    asiento.setPosicion(numpy.round( posicionX_asiento, 2 ), numpy.round( posicionY_asiento, 2) )
+    
+    
+    return ( posicion_NodoPrefinal, posicion_Union ,(numpy.round( posicionX_asiento, 2 ), numpy.round( posicionY_asiento,2 )) )
+
+
+def dibujarAsientoGrafoGeneral(posicionX_asiento, posicionY_asiento, plt):
     #Se dibuja el asientocon un * rojo
     plt.ion()
     plt.draw()
     plt.pause(0.0001)
     plt.plot(posicionX_asiento, posicionY_asiento, marker="*", markersize=10, color="red")
     plt.pause(0.0001)
-    
-    
-    # Se saca la posicion del asiento en el enlace izquierdo o derecho
-    posicion_Union = ( Grafo.nodes()[nodoPrefinal]['pos'][0] , numpy.round(posicionY_asiento, 2) )
-    posicion_NodoPrefinal = (Grafo.nodes()[nodoPrefinal]['pos'][0], Grafo.nodes()[nodoPrefinal]['pos'][1])
-    return ( posicion_NodoPrefinal, posicion_Union ,(numpy.round( posicionX_asiento, 2 ), numpy.round( posicionY_asiento,2 )) )
-    
 
 def dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plot):
     """
@@ -756,7 +763,7 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
 
 
     # Se pinta el asiento
-    dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, destino, plt)
+    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt)
 
     #Si esta a True se muestra en enlace desde las escaleras hasta el asiento
     if(dibujarEnlacePrefinalAsiento):
@@ -771,7 +778,7 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
 
 
 
-def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
+def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, NodoPrefinal_pos, Asiento_pos , peso='weight'):
     """
     Función pará pintar el grafo segun atributos.
     
@@ -793,6 +800,10 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
         Lista de Sector.
     asiento : Asiento
         Asiento al que se accede.
+    NodoPrefinal_pos : List
+        Posición del nodo Prefinal.
+    Asiento_pos : List
+        Posción del asiento.
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
         
@@ -900,7 +911,10 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
 
     # Se pinta el asiento
-    dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, destino, plt)
+    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt)
+
+    # Se pintan los datos del grafo
+    dibujarDatosEspectadorMasRapida(Grafo, espectador, plt)
 
 
     # Se pintan los datos del grafo
@@ -915,7 +929,7 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     return plt
 
 
-def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
+def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, NodoPrefinal_pos, Asiento_pos, peso='weight'):
     """
     Función pará pintar el grafo con la ruta más rapida.
     
@@ -937,6 +951,10 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
         Lista de Sector.
     asiento : Asiento
         Asiento al que se accede.
+    NodoPrefinal_pos : List
+        Posición del nodo Prefinal.
+    Asiento_pos : List
+        Posción del asiento.
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
     
@@ -1019,7 +1037,10 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'   , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
 
     # Se pinta el asiento
-    dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, destino, plt)
+    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt)
+
+    #Se dibuja una linea para simular el camino desde las escaleras hasta el  asiento
+    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt)
 
     # Se pintan los datos del grafo
     dibujarDatosEspectadorMasRapida(Grafo, espectador, plt)
@@ -1031,7 +1052,7 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     return plt
 
 
-def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, peso='weight'):
+def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, NodoPrefinal_pos, Asiento_pos, peso='weight'):
     """
     Función para dibujar el grafo con la ruta más corta
     
@@ -1053,6 +1074,10 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
         Lista de Sector.
     asiento : Asiento
         Asiento del espectador.
+    NodoPrefinal_pos : List
+        Posición del nodo Prefinal.
+    Asiento_pos : List
+        Posción del asiento.
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
         
@@ -1138,7 +1163,12 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
     plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
     
     # Se pinta el asiento
-    dibujarAsientoGrafoGeneral(Grafo, sectores, asiento, destino, plt)
+    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt)
+    
+    
+    # Se dibujan el enlace del nodo Prefinal al asiento
+    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt)
+    
 
     # Se pintan los datos del grafo
     dibujarDatosEspectadorMasCorta(Grafo, espectador, plt)

@@ -101,12 +101,18 @@ class Asiento():
         self.sector = sector
         self.fila = fila
         self.columna = columna
+        self.posicion_X = None
+        self.posicion_Y = None
         self.enlaceProyeccion = self.enlaceProyeccion()
 
 
     def __repr__(self):
         return "El Asiento, esta en el sector %s fila: %s, columna: %s" % (self.sector.nombre, self.fila, self.columna)
     
+    def setPosicion(self, posicion_X, posicion_Y):
+        self.posicion_X = posicion_X
+        self.posicion_Y = posicion_Y
+        
     def enlaceProyeccion(self):
         proyeccionHorizontal = None
          #Primero se mira si tiene enlaces derecha o izquierda        
@@ -144,6 +150,21 @@ class Asiento():
         
     
     def nodoPrePreFinal(self):
+        """
+        Funcion para rellenar el nodoPrePrefinal
+        Se calcula primero si se ira al lado derecho o izquierdo en funcion de la ubicacion horizontal del asiento.
+        Posteriormente se calcula si el nodoPrePrefinal sera el nodo superior o inferior
+
+        Raises
+        ------
+        Exception
+            Se produce si no tiene enlace derecho o izquierdo (Asiento no accesible).
+
+        Returns
+        -------
+        None.
+
+        """
         divisorVertical = 0.5
         
        
@@ -151,10 +172,9 @@ class Asiento():
         proyeccionHorizontal = None
         proyeccionVertical = None
         
-        #NOTA: Las filas se enumeran de izquierda a derecha --------------------
+        #NOTA: Las filas se enumeran de izquierda a derecha ***********************
         
         #Primero se mira si tiene enlaces derecha o izquierda        
-        
         if (self.sector.existeEnlaceIzquierdo() == True or self.sector.existeEnlaceDerecho() == True):
         
             #Se mira cual es el lado mas próximo (izquierda o derecha)
@@ -176,8 +196,7 @@ class Asiento():
             if (self.columna >= (self.sector.columnas/2)) and self.sector.existeEnlaceDerecho() == False:
                 proyeccionHorizontal = 'IZQ'
                 
-                    
-                    
+                   
         else:
             raise Exception("ERROR, No tiene enlace derecho ni izquierdo.")
             return
