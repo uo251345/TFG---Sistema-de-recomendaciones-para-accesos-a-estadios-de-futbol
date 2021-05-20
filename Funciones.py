@@ -31,7 +31,6 @@ import threading
 import time
 
 
-import numpy
 
 
 import Clases
