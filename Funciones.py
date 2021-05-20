@@ -1182,6 +1182,11 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
 
 
 
+                
+    
+    
+
+
     
 
 #Variable con las repuestas (Se usa para el formulario de atributos)
@@ -1197,7 +1202,22 @@ respuestas = Respuestas()
 
 
 def leerSectoresCSV(fichero, Grafo):
-    
+    """
+    Función para leer los Sectores de la grada de un fichero CSV
+
+    Parameters
+    ----------
+    fichero : String
+        Fichero .csv con los sectores.
+    Grafo : networkx.classes.multidigraph.MultiDiGraph
+        Grafo del estadio.
+
+    Returns
+    -------
+    sectores : Lista
+        Lista con los sectores leidos.
+
+    """
     sectores = {}
     
     

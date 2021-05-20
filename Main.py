@@ -211,7 +211,7 @@ while True:
 
 
             #Dijkstra_BIDIRECCIONAL
-            try:
+            try: 
                 djk_Ruta_MasCorta = nx.bidirectional_dijkstra (G_MasCorta, source=origen, target=destino, weight='weight')
                 
             except nx.NetworkXNoPath:
