@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Funciones &mdash; documentación de TFG - Sistema de recomendaciones para accesos a estadios de fútbol - 1.0.0</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Clases" href="Clases.html" />
+    <link rel="prev" title="Librerías" href="Librerias.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> TFG - Sistema de recomendaciones para accesos a estadios de fútbol
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Capítulos:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Librerias.html">Librerías</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clases.html">Clases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Informacion_Adicional.html">Información Adicional</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TFG - Sistema de recomendaciones para accesos a estadios de fútbol</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Funciones</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Funciones.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="funciones">
+<h1>Funciones<a class="headerlink" href="#funciones" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Módulo con las funciones usadas en el proyecto.</p>
+<span class="target" id="module-Funciones"></span><p>&#64;author: Pelayo Tiesta</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.DibujarGrafoGeneral">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">DibujarGrafoGeneral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mostrarPesos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sectores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peso</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weight'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.DibujarGrafoGeneral" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para dibujar el grafo General</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo a dibujar.</p></li>
+<li><p><strong>mostrarPesos</strong> (<em>bool</em>) – Boolean - True si se muestran los Pesos</p></li>
+<li><p><strong>sectores</strong> (<em>Lista</em>) – Sectores del grafo</p></li>
+<li><p><strong>peso</strong> (<em>string</em><em>, </em><em>optional</em>) – String con el la etiqueta peso. (Default: weight)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.DibujarGrafoMasCorta">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">DibujarGrafoMasCorta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mostrarPesos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destino</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ruta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sectores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asiento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NodoPrefinal_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Asiento_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peso</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weight'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.DibujarGrafoMasCorta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para dibujar el grafo con la ruta más corta</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo a dibujar.</p></li>
+<li><p><strong>mostrarPesos</strong> (<em>bool</em>) – Boolean - True si se muestran los Pesos.</p></li>
+<li><p><strong>origen</strong> (<em>string</em>) – String - Nodo inicial de la solucion.</p></li>
+<li><p><strong>destino</strong> (<em>string</em>) – String - Nodo final de la solucion.</p></li>
+<li><p><strong>ruta</strong> (<em>lista</em>) – Lista - (Longitud [Nodos_Solucion])</p></li>
+<li><p><strong>espectador</strong> (<a class="reference internal" href="Clases.html#Clases.Espectador" title="Clases.Espectador"><em>Espectador</em></a>) – Espectador que accede a un asiento.</p></li>
+<li><p><strong>sectores</strong> (<em>Lista</em>) – Lista de Sector.</p></li>
+<li><p><strong>asiento</strong> (<a class="reference internal" href="Clases.html#Clases.Asiento" title="Clases.Asiento"><em>Asiento</em></a>) – Asiento del espectador.</p></li>
+<li><p><strong>NodoPrefinal_pos</strong> (<em>List</em>) – Posición del nodo Prefinal.</p></li>
+<li><p><strong>Asiento_pos</strong> (<em>List</em>) – Posción del asiento.</p></li>
+<li><p><strong>peso</strong> (<em>string</em><em>, </em><em>optional</em>) – String con el la etiqueta peso. (Default: weight)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p><strong>Plt donde se dibuja</strong></p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.DibujarGrafoMasRapida">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">DibujarGrafoMasRapida</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mostrarPesos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destino</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ruta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sectores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asiento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NodoPrefinal_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Asiento_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peso</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weight'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.DibujarGrafoMasRapida" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función pará pintar el grafo con la ruta más rapida.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo a dibujar.</p></li>
+<li><p><strong>mostrarPesos</strong> (<em>bool</em>) – Boolean - True si se muestran los Pesos.</p></li>
+<li><p><strong>origen</strong> (<em>string</em>) – String - Nodo inicial de la solucion.</p></li>
+<li><p><strong>destino</strong> (<em>string</em>) – String - Nodo final de la solucion.</p></li>
+<li><p><strong>ruta</strong> (<em>lista</em>) – Lista - (Longitud [Nodos_Solucion])</p></li>
+<li><p><strong>espectador</strong> (<a class="reference internal" href="Clases.html#Clases.Espectador" title="Clases.Espectador"><em>Espectador</em></a>) – Espectador que accede a un asiento.</p></li>
+<li><p><strong>sectores</strong> (<em>Lista</em>) – Lista de Sector.</p></li>
+<li><p><strong>asiento</strong> (<a class="reference internal" href="Clases.html#Clases.Asiento" title="Clases.Asiento"><em>Asiento</em></a>) – Asiento al que se accede.</p></li>
+<li><p><strong>NodoPrefinal_pos</strong> (<em>List</em>) – Posición del nodo Prefinal.</p></li>
+<li><p><strong>Asiento_pos</strong> (<em>List</em>) – Posción del asiento.</p></li>
+<li><p><strong>peso</strong> (<em>string</em><em>, </em><em>optional</em>) – String con el la etiqueta peso. (Default: weight)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p><strong>Plt donde se dibuja</strong></p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.DibujarGrafoAtributos">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">DibujarGrafoAtributos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mostrarPesos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destino</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ruta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sectores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asiento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NodoPrefinal_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Asiento_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peso</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weight'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.DibujarGrafoAtributos" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función pará pintar el grafo segun atributos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo a dibujar.</p></li>
+<li><p><strong>mostrarPesos</strong> (<em>bool</em>) – Boolean - True si se muestran los Pesos.</p></li>
+<li><p><strong>origen</strong> (<em>string</em>) – String - Nodo inicial de la solucion.</p></li>
+<li><p><strong>destino</strong> (<em>string</em>) – String - Nodo final de la solucion.</p></li>
+<li><p><strong>ruta</strong> (<em>lista</em>) – Lista - (Longitud [Nodos_Solucion])</p></li>
+<li><p><strong>espectador</strong> (<a class="reference internal" href="Clases.html#Clases.Espectador" title="Clases.Espectador"><em>Espectador</em></a>) – Espectador que accede a un asiento.</p></li>
+<li><p><strong>sectores</strong> (<em>Lista</em>) – Lista de Sector.</p></li>
+<li><p><strong>asiento</strong> (<a class="reference internal" href="Clases.html#Clases.Asiento" title="Clases.Asiento"><em>Asiento</em></a>) – Asiento al que se accede.</p></li>
+<li><p><strong>NodoPrefinal_pos</strong> (<em>List</em>) – Posición del nodo Prefinal.</p></li>
+<li><p><strong>Asiento_pos</strong> (<em>List</em>) – Posción del asiento.</p></li>
+<li><p><strong>peso</strong> (<em>string</em><em>, </em><em>optional</em>) – String con el la etiqueta peso. (Default: weight)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p><strong>Plt donde se dibuja</strong></p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.DibujarGrafoOcupacion">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">DibujarGrafoOcupacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mostrarPesos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destino</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sectores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asiento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodoParado</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dibujarEnlacePrefinalAsiento</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NodoPrefinal_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Asiento_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peso</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weight'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.DibujarGrafoOcupacion" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Funcion para dibujar el grafo de atributos</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo a dibujar.</p></li>
+<li><p><strong>mostrarPesos</strong> (<em>bool</em>) – Boolean - True si se muestran los Pesos.</p></li>
+<li><p><strong>origen</strong> (<em>string</em>) – String - Nodo inicial de la solucion.</p></li>
+<li><p><strong>destino</strong> (<em>string</em>) – String - Nodo final de la solucion.</p></li>
+<li><p><strong>espectador</strong> (<a class="reference internal" href="Clases.html#Clases.Espectador" title="Clases.Espectador"><em>Espectador</em></a>) – Espectador que accede a un asiento.</p></li>
+<li><p><strong>sectores</strong> (<em>Lista</em>) – Lista de Sector.</p></li>
+<li><p><strong>asiento</strong> (<a class="reference internal" href="Clases.html#Clases.Asiento" title="Clases.Asiento"><em>Asiento</em></a>) – Asiento al que se accede.</p></li>
+<li><p><strong>nodoParado</strong> (<em>String</em>) – Nodo en el que esta parado el usuario.</p></li>
+<li><p><strong>dibujarEnlacePrefinalAsiento</strong> (<em>Boolean</em><em>, </em><em>optional</em>) – Bool para dibujar el enlace del nodo prefinal al asiento. (Default: False)</p></li>
+<li><p><strong>NodoPrefinal_pos</strong> (<em>Tupla</em><em>, </em><em>optional</em>) – Posicion del nodo Prefinal. (Default: None)</p></li>
+<li><p><strong>Asiento_pos</strong> (<em>Tupla</em><em>, </em><em>optional</em>) – Posicion del asiento. (Default: None)</p></li>
+<li><p><strong>peso</strong> (<em>string</em><em>, </em><em>optional</em>) – String con el la etiqueta peso. (Default: weight)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>Plt donde se dibujo.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.dibujarAsientoGrafoGeneral">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">dibujarAsientoGrafoGeneral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">posicionX_asiento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posicionY_asiento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.dibujarAsientoGrafoGeneral" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.addnodoPrefinal">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">addnodoPrefinal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posicionUnion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sectorEspectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enlacePreFinal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fila</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombreNodoPrefinal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NP'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.addnodoPrefinal" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para agregar al Grafo un nodo prefinal equivalente a la proyección del asiento en las escaleras.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo a actualizar.</p></li>
+<li><p><strong>posicionUnion</strong> (<em>Tupla</em>) – Posicion de la proyeccion del asiento sobre el enlace de su derecha o izquierda.</p></li>
+<li><p><strong>sectorEspectador</strong> (<a class="reference internal" href="Clases.html#Clases.Sector" title="Clases.Sector"><em>Sector</em></a>) – Sector sobre el que se encuentra el asiento del espectador.</p></li>
+<li><p><strong>enlacePreFinal</strong> (<em>Tupla</em>) – Enlace actual del grafo que se borrara para agregar el nuevo nodo Prefinal.</p></li>
+<li><p><strong>fila</strong> (<em>Integer</em>) – Valor de la fila donde esta el asiento.</p></li>
+<li><p><strong>nombreNodoPrefinal</strong> (<em>String</em><em>, </em><em>optional</em>) – Nombre del nodo prefinal resultante. Valor por defecto “NP”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p><strong>nombreNodoPrefinal</strong> – Nombre del nodo prefinal.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.dibujarRectaNodoPrefinal_Asiento">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">dibujarRectaNodoPrefinal_Asiento</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">NodoPrefinal_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Asiento_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.dibujarRectaNodoPrefinal_Asiento" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Funcion para dibujar una línea que emule el camino desde la escalera hasta el asiento.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>NodoPrefinal_pos</strong> (<em>Tupla</em>) – Posiciones del nodo Prefinal.</p></li>
+<li><p><strong>Asiento_pos</strong> (<em>Tupla</em>) – Posiciones del asiento.</p></li>
+<li><p><strong>plot</strong> (<em>module</em>) – Plt donde se dubujara la linea.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.dibujarDatosEspectadorGeneral">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">dibujarDatosEspectadorGeneral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.dibujarDatosEspectadorGeneral" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para dibujar los datos del espectador en el plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo General.</p></li>
+<li><p><strong>espectador</strong> (<a class="reference internal" href="Clases.html#Clases.Espectador" title="Clases.Espectador"><em>Espectador</em></a>) – Espectador.</p></li>
+<li><p><strong>plot</strong> (<em>mdoule</em>) – Plt donde se dibuja.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.dibujarDatosEspectadorMasCorta">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">dibujarDatosEspectadorMasCorta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.dibujarDatosEspectadorMasCorta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para dibujar los datos del espectador en el plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo General.</p></li>
+<li><p><strong>espectador</strong> (<a class="reference internal" href="Clases.html#Clases.Espectador" title="Clases.Espectador"><em>Espectador</em></a>) – Espectador.</p></li>
+<li><p><strong>plot</strong> (<em>mdoule</em>) – Plt donde se dibuja.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.dibujarDatosEspectadorMasRapida">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">dibujarDatosEspectadorMasRapida</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.dibujarDatosEspectadorMasRapida" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para dibujar los datos del espectador en el plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo General.</p></li>
+<li><p><strong>espectador</strong> (<a class="reference internal" href="Clases.html#Clases.Espectador" title="Clases.Espectador"><em>Espectador</em></a>) – Espectador.</p></li>
+<li><p><strong>plot</strong> (<em>mdoule</em>) – Plt donde se dibuja.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.dibujarDatosEspectadorAtributos">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">dibujarDatosEspectadorAtributos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espectador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.dibujarDatosEspectadorAtributos" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para dibujar los datos del espectador en el plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo General.</p></li>
+<li><p><strong>espectador</strong> (<a class="reference internal" href="Clases.html#Clases.Espectador" title="Clases.Espectador"><em>Espectador</em></a>) – Espectador.</p></li>
+<li><p><strong>plot</strong> (<em>mdoule</em>) – Plt donde se dibuja.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.botonAtributosPersonalesClick">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">botonAtributosPersonalesClick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ventana_self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">escalerasConBarandillas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">escalerasEnBuenEstado</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pasillosAmplios</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pasillosVentilados</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pasillosSecos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pasilloIluminados</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.botonAtributosPersonalesClick" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo auxiliar para capturar el click del boton Confirmar en el formulario de atributos</p>
+<p>y modificar el diccionario respuestas</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.leerSectoresCSV">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">leerSectoresCSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fichero</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.leerSectoresCSV" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para leer los Sectores de la grada de un fichero CSV</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fichero</strong> (<em>String</em>) – Fichero .csv con los sectores.</p></li>
+<li><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo del estadio.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p><strong>sectores</strong> – Lista con los sectores leidos.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>Lista</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.importarGrafoJSON">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">importarGrafoJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Fichero</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.importarGrafoJSON" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Funcion para leer el grafo a parti de un fichero JSON</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>Fichero</strong> (<em>String</em>) – Fichero de extension .json.</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p><strong>Grafo</strong> – Grafo leido del fichero JSON.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>networkx.classes.multidigraph.MultiDiGraph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Funciones.exportarGrafoJSON">
+<span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">exportarGrafoJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Grafo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.exportarGrafoJSON" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Funcion para generar un fichero JSON a partir del grafo dado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>Grafo</strong> (<em>networkx.classes.multidigraph.MultiDiGraph</em>) – Grafo a exportar.</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Funciones.MenuAtributosPersonales">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">MenuAtributosPersonales</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.MenuAtributosPersonales" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clase para crear un menú de atributos a puntuar</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Funciones.Respuestas">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">Respuestas</span></span><a class="headerlink" href="#Funciones.Respuestas" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clase para las respuestas del menú de atributos</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Funciones.Respuestas.rellenar">
+<span class="sig-name descname"><span class="pre">rellenar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">escalerasConBarandillas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">escalerasEnBuenEstado</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pasillosAmplios</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pasillosVentilados</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pasillosSecos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pasilloIluminados</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.Respuestas.rellenar" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para rellenar los campos de las respuestas</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>escalerasConBarandillas</strong> (<em>Integer</em>) – Valor respondido para este campo.</p></li>
+<li><p><strong>escalerasEnBuenEstado</strong> (<em>Integer</em>) – Valor respondido para este campo.</p></li>
+<li><p><strong>pasillosAmplios</strong> (<em>Integer</em>) – Valor respondido para este campo.</p></li>
+<li><p><strong>pasillosVentilados</strong> (<em>Integer</em>) – Valor respondido para este campo.</p></li>
+<li><p><strong>pasillosSecos</strong> (<em>Integer</em>) – Valor respondido para este campo.</p></li>
+<li><p><strong>pasilloIluminados</strong> (<em>Integer</em>) – Valor respondido para este campo.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Funciones.ventanaAtributosPersonales">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">Funciones.</span></span><span class="sig-name descname"><span class="pre">ventanaAtributosPersonales</span></span><a class="headerlink" href="#Funciones.ventanaAtributosPersonales" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clase para dibujar una ventana con los atributos a puntuar</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Funciones.ventanaAtributosPersonales.center">
+<span class="sig-name descname"><span class="pre">center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Funciones.ventanaAtributosPersonales.center" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función para centrar la ventana</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Clases.html" class="btn btn-neutral float-right" title="Clases" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Librerias.html" class="btn btn-neutral float-left" title="Librerías" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Pelayo Ricardo Tiesta Cosío.
+
+    </p>
+  </div>
+    
+    
+    
+    Construido con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
