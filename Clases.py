@@ -40,9 +40,8 @@ class Sector():
         posicion : Tupla
             Posicion.
             
-        Returns
-        -------
-        None.
+
+
 
         """
         self.nombre = nombre
@@ -92,9 +91,6 @@ class Asiento():
         columna : Integer
             Numero de columna donde esta el asiento.
 
-        Returns
-        -------
-        None.
 
         """
         
@@ -114,6 +110,19 @@ class Asiento():
         self.posicion_Y = posicion_Y
         
     def enlaceProyeccion(self):
+        """
+        Función para obtener el enlace de la proyección del asiento.
+
+        Raises
+        ------
+        Exception
+            Produce Excepcion si no existe pasillo derecho ni izquierdo.
+
+        Returns
+        -------
+        Enlace - Tupla
+
+        """
         proyeccionHorizontal = None
          #Primero se mira si tiene enlaces derecha o izquierda        
         
@@ -151,7 +160,7 @@ class Asiento():
     
     def nodoPrePreFinal(self):
         """
-        Funcion para rellenar el nodoPrePrefinal
+        Función para rellenar el nodoPrePrefinal
         Se calcula primero si se ira al lado derecho o izquierdo en funcion de la ubicacion horizontal del asiento.
         Posteriormente se calcula si el nodoPrePrefinal sera el nodo superior o inferior
 
@@ -162,7 +171,7 @@ class Asiento():
 
         Returns
         -------
-        None.
+        String - Nodo PrePrefinal
 
         """
         divisorVertical = 0.5
@@ -260,10 +269,6 @@ class Espectador:
         puertaEntrada : String
             Puerta por la que accede al estadio
 
-        Returns
-        -------
-        None.
-
         """
         
         self.ID = ID
@@ -279,28 +284,14 @@ class Espectador:
     def setNodoPreFinal(self, nodoPrefinal):
         self.nodoPrefinal = nodoPrefinal
         
-class MenuSector(OptionMenu):
-    def __init__(self, master, status, *options):
-        self.var = StringVar(master)
-        self.var.set(status)
-        OptionMenu.__init__(self, master, self.var, *options)
-        self.config(
-            font=('calibri', (10)), bg='white', width=15, fg='dark red')
-        self['menu'].config(font=('calibri', (10)), bg='white', fg='black')
 
-    def callback():
-        val = '{}'.format(self.var.get())
-        return val
-        # subprocess.call([val])
-        
         
         
 
 
 class ThreadingOcupacion(object):
-    """ Threading example class
-    The run() method will be started and it will run in the background
-    until the application exits.
+    """ 
+    Clase para crear un hilo que simule la entrada de personas en la grada
     """
 
     def __init__(self, Grafo):
@@ -311,9 +302,6 @@ class ThreadingOcupacion(object):
         Grafo : Grafo
             Grafo del estadio.
         
-        Returns
-        -------
-        None.
 
         """
         
@@ -322,8 +310,8 @@ class ThreadingOcupacion(object):
         self._paused = False
 
         thread = threading.Thread(target=self.run, args=())
-        thread.daemon = True                            # Daemonize thread
-        thread.start()                                  # Start the execution
+        thread.daemon = True                            
+        thread.start()                                  
 
     def run(self):
         """ Metodo para corren en segundo plano y modificar el peso del grafo con la ocupacion """
@@ -352,7 +340,7 @@ class ThreadingOcupacion(object):
         
 
     def terminate(self):
-        """ Funcion para terminar el hilo  """
+        """ Función para terminar el hilo  """
         self._running = False
         return self.Grafo
         
@@ -360,21 +348,11 @@ class ThreadingOcupacion(object):
         self._paused = True
         return self.Grafo
         
-        
     def resume(self):
         self._paused = False
        
         
-    
-        
-class FilaFueraDerango(Exception):
-    """Raised si la fila es mayor a las filas del sector"""
-    pass
 
-class ColumnaFueraDerango(Exception):
-    """Raised si la columna es mayor a las columna del sector"""
-    pass
-        
         
         
         

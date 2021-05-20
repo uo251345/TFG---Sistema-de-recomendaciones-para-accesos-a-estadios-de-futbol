@@ -53,7 +53,7 @@ ion()
 
 
 #Se lee el grafo del fichero JSON
-G = Funciones.importarGrafoJSON(__location__ + "\\Ficheros\\nodosExportados.json",)
+G = Funciones.importarGrafoJSON(__location__ + "\\Ficheros\\Nodos.json",)
 
 #Se leen los sectores del fichero Sectores    
 sectores = Funciones.leerSectoresCSV(__location__ + "\\Ficheros\\Sectores.csv", G)

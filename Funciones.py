@@ -151,7 +151,7 @@ class Respuestas:
 
 class ventanaAtributosPersonales():
     """
-    Clase par dibujar una ventana con los atributos a puntuar
+    Clase para dibujar una ventana con los atributos a puntuar
     """
     
     def __init__(self):
@@ -212,7 +212,7 @@ class ventanaAtributosPersonales():
     
     def center(self, window):
         """
-        Para centrar la ventana
+        Función para centrar la ventana
         """
         window.update_idletasks()
         width = window.winfo_width()
@@ -256,9 +256,6 @@ def DibujarGrafoGeneral(Grafo, mostrarPesos, sectores, peso='weight'):
     peso : string, optional
         String con el la etiqueta peso. (Default: weight)
 
-    Returns
-    -------
-    Plot donde se ha dibujado.
 
     """
     #Nueva ventana
@@ -553,9 +550,7 @@ def dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plot):
     plot : module
         Plt donde se dubujara la linea.
 
-    Returns
-    -------
-    None.
+
 
     """
     
@@ -574,7 +569,8 @@ def dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plot):
 
 def dibujarDatosEspectadorGeneral(Grafo, espectador, plot):
     """
-
+    Función para dibujar los datos del espectador en el plot
+    
     Parameters
     ----------
     Grafo : networkx.classes.multidigraph.MultiDiGraph
@@ -584,9 +580,7 @@ def dibujarDatosEspectadorGeneral(Grafo, espectador, plot):
     plot : mdoule
         Plt donde se dibuja.
 
-    Returns
-    -------
-    None.
+
 
     """
     ID = "\nID: " + str(getattr(espectador, 'ID'))
@@ -603,7 +597,21 @@ def dibujarDatosEspectadorGeneral(Grafo, espectador, plot):
 
 
 def dibujarDatosEspectadorAtributos(Grafo, espectador, plot):
+    """
+    Función para dibujar los datos del espectador en el plot
     
+    Parameters
+    ----------
+    Grafo : networkx.classes.multidigraph.MultiDiGraph
+        Grafo General.
+    espectador : Espectador
+        Espectador.
+    plot : mdoule
+        Plt donde se dibuja.
+
+
+
+    """
     ID = "\nID: " + str(getattr(espectador, 'ID'))
     PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
     NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
@@ -618,7 +626,21 @@ def dibujarDatosEspectadorAtributos(Grafo, espectador, plot):
 
 
 def dibujarDatosEspectadorMasRapida(Grafo, espectador, plot):
+    """
+    Función para dibujar los datos del espectador en el plot
     
+    Parameters
+    ----------
+    Grafo : networkx.classes.multidigraph.MultiDiGraph
+        Grafo General.
+    espectador : Espectador
+        Espectador.
+    plot : mdoule
+        Plt donde se dibuja.
+
+
+
+    """
     ID = "\nID: " + str(getattr(espectador, 'ID'))
     PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
     NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
@@ -632,7 +654,21 @@ def dibujarDatosEspectadorMasRapida(Grafo, espectador, plot):
 
 
 def dibujarDatosEspectadorMasCorta(Grafo, espectador, plot):
+    """
+    Función para dibujar los datos del espectador en el plot
     
+    Parameters
+    ----------
+    Grafo : networkx.classes.multidigraph.MultiDiGraph
+        Grafo General.
+    espectador : Espectador
+        Espectador.
+    plot : mdoule
+        Plt donde se dibuja.
+
+
+
+    """
     ID = "\nID: " + str(getattr(espectador, 'ID'))
     PuertaEntrada = "\nPuerta de entrada: " + str(getattr(espectador, 'puertaEntrada'))
     NodoPrefinal = "\nNodo prefinal: " + str(getattr(espectador, 'nodoPrefinal'))
@@ -809,7 +845,7 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
         
     Returns
     -------
-    Plt donde se dibuja.
+    Plt donde se dibuja : module
     """
 
     #Nueva ventana
@@ -959,7 +995,8 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
         String con el la etiqueta peso. (Default: weight)
     
     Returns
-    plt donde se dibujo
+    -------
+    Plt donde se dibuja : module
         
     """
 
@@ -1083,7 +1120,7 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
         
     Returns
     -------
-    Plt donde se dibuja.
+    Plt donde se dibuja : module
         
     """
 
@@ -1266,6 +1303,7 @@ def leerSectoresCSV(fichero, Grafo):
 def exportarGrafoJSON(Grafo):
     """
     Funcion para generar un fichero JSON a partir del grafo dado.
+    
     Parameters
     ----------
     Grafo : networkx.classes.multidigraph.MultiDiGraph
@@ -1292,7 +1330,8 @@ def importarGrafoJSON(Fichero):
 
     Returns
     -------
-    Graafo.
+    Grafo: networkx.classes.multidigraph.MultiDiGraph
+        Grafo leido del fichero JSON.
 
     """
     
