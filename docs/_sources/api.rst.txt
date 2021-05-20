@@ -1,5 +1,0 @@
-Funciones API
-
-
-
-.. autofunction:: importarGrafoJSON

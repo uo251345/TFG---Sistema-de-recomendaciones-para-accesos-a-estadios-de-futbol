@@ -1,6 +1,0 @@
-Librerias
-============
-
-El proyecto emplea las siguientes librerias
-
-:ref:`My Label <moderngl:MyArbitraryTarget>`
