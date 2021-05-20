@@ -253,7 +253,7 @@ def DibujarGrafoGeneral(Grafo, mostrarPesos, sectores, peso='weight'):
     sectores : Lista
         Sectores del grafo
     peso : string, optional
-        String con el la etiqueta peso. (Default: weight)
+        String con la etiqueta peso. (Default: weight)
 
 
     """
@@ -728,7 +728,7 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
     Asiento_pos : Tupla, optional
         Posicion del asiento. (Default: None)
     peso : string, optional
-        String con el la etiqueta peso. (Default: weight)
+        String con la etiqueta peso. (Default: weight)
         
     Returns
     -------
@@ -840,7 +840,7 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     Asiento_pos : List
         Posción del asiento.
     peso : string, optional
-        String con el la etiqueta peso. (Default: weight)
+        String con la etiqueta peso. (Default: weight)
         
     Returns
     -------
@@ -991,7 +991,7 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     Asiento_pos : List
         Posción del asiento.
     peso : string, optional
-        String con el la etiqueta peso. (Default: weight)
+        String con la etiqueta peso. (Default: weight)
     
     Returns
     -------
@@ -1115,7 +1115,7 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
     Asiento_pos : List
         Posción del asiento.
     peso : string, optional
-        String con el la etiqueta peso. (Default: weight)
+        String con la etiqueta peso. (Default: weight)
         
     Returns
     -------
