@@ -11,7 +11,6 @@ Documentación Sistema de recomendaciones para accesos a estadios de fútbol.
    Introduccion
    Librerias
    Funciones
-   Clases
    Informacion_Adicional
 
 
