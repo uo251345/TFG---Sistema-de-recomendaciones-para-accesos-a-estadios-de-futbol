@@ -1,7 +1,11 @@
 Funciones
 ============
 
+Funciones:
+**********
+
 Módulo con las funciones usadas en el proyecto.
+
 
 .. automodule:: Funciones
 

@@ -1,6 +1,9 @@
 Clases
 ============
 
+Clases:
+*******
+
 Módulo con las clases usadas en el proyecto.
 
 .. automodule:: Clases
