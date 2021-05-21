@@ -6,13 +6,13 @@ Este repositorio contiene el código adjunto a la memoria del TFG - Sistema de r
 adiccional a dicho código.
 
 ### Instalación
-La instalación del código se puede consultar en el enlace: [Instalación](enlace)
+La instalación del código se puede consultar en el enlace: [Instalación](https://sistema-de-recomendaciones-para-accesos-a-estadios-de-futbol.readthedocs.io/es/latest/Introduccion.html#instalar-python3)
 
 ### Uso del Programa
-Las instrucciones de uso del progama se encuentra en el enlace: [Instrucciones](enlace)
+Las instrucciones de uso del progama se encuentra en el enlace: [Instrucciones](https://sistema-de-recomendaciones-para-accesos-a-estadios-de-futbol.readthedocs.io/es/latest/Introduccion.html#uso-del-programa)
 
 ## Wiki
-Toda la documentación del código se encuentra en el enlace: [Wiki](enlace)
+Toda la documentación del código se encuentra en el enlace: [Wiki](https://sistema-de-recomendaciones-para-accesos-a-estadios-de-futbol.readthedocs.io/es/latest/index.html)
 
 
 ## Autores
