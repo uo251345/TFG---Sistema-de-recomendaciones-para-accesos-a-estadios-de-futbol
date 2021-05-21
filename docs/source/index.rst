@@ -20,4 +20,4 @@ Documentación Sistema de recomendaciones para accesos a estadios de fútbol.
 Código Fuente
 ==================
 
-El código fuente de este proyecto se encuentra en el repositorio de `GitHub <https://github.com/Pelayin97/CODIGO-TFG-RUTAS>`_.
+El código fuente de este proyecto se encuentra en el repositorio de `GitHub <https://github.com/uo251345/TFG---Sistema-de-recomendaciones-para-accesos-a-estadios-de-futbol>`_.

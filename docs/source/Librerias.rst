@@ -15,7 +15,7 @@ así como facilitar la depuración tanto del modelo de la grada, como de las sol
 
 Networkx:
 ---------
-`Networkx <https://networkx.org/documentation/stable/index.html>`_ es una biblioteca para la creación, manipulacion y estudio de grafos y redes.
+`Networkx <https://networkx.org/documentation/stable/index.html>`_ es una biblioteca para la creación, manipulación y estudio de grafos y redes.
 
 El uso principal en este proyecto es la creación de grafos, compuestos por enlaces que simulen los diferentes pasillos del estadio asi como de las uniones de estos. De este modo
 se podrá visualizar el grafo de forma gráfica, además de realizar sobre este modificaciones, lecturas y aplicaciones de algoritmos para la obtención de diferentes rutas.
@@ -35,9 +35,9 @@ Numpy:
 
 json:
 ----------
-`threading <https://docs.python.org/3/library/threading.html>`_ es un modulo Python utilizado para condificar y descodificar estructuras de datos en formato .json.
+`threading <https://docs.python.org/3/library/threading.html>`_ es un módulo Python utilizado para condificar y descodificar estructuras de datos en formato .json.
  
  
 threading:
 ----------
-`threading <https://docs.python.org/3/library/threading.html>`_ es un modulo Python utilizado para crear hilos de paralelismo en los que realizar diferentes tareas simultaneamente.
+`threading <https://docs.python.org/3/library/threading.html>`_ es un módulo Python utilizado para crear hilos de paralelismo en los que realizar diferentes tareas simultaneamente.
