@@ -22,11 +22,13 @@ Pelayo Ricardo Tiesta Cosío
 * Universidad de Oviedo
 * Escuela Politécnica de Ingeniería de Gijón
 
+
 <a href=https://www.uniovi.es >
-  <img src="https://i.imgur.com/KoWMQfd.jpg" alt="Logo EPI" width='350' align="right" >
+  <img src="https://i.imgur.com/KoWMQfd.jpg" alt="Logo Uniovi" width='350' align="left" >
 </a>
 
 
 <a href=https://epigijon.uniovi.es >
   <img src="https://i.imgur.com/0JTADe9.jpg" alt="Logo EPI" width='350' align="right" >
 </a>
+
