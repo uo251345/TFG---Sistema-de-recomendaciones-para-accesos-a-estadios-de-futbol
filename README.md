@@ -30,21 +30,5 @@ Pelayo Ricardo Tiesta Cosío
   <img src="https://epigijon.uniovi.es/image/image_gallery?uuid=345cbbc1-b886-4304-ad65-058aadbdf9dd&groupId=3743853&t=1620647612620" alt="Logo EPI" width='350' align="right" >
 </a>
 
-.row {
-  display: flex; /* equal height of the children */
-}
-
-.col {
-  flex: 1; /* additionally, equal width */
-  
-  padding: 1em;
-  border: solid;
-}
-
-<div class="row">
-  <div class="col">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-  <div class="col">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad omnis quae expedita ipsum nobis praesentium velit animi minus amet perspiciatis laboriosam similique debitis iste ratione nemo ea at corporis aliquam.</div>
-</div>
-
-
+![Image](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Logo_Universidad_de_Oviedo_centrado.jpg) ![Image](https://epigijon.uniovi.es/image/image_gallery?uuid=345cbbc1-b886-4304-ad65-058aadbdf9dd&groupId=3743853&t=1620647612620)
 
