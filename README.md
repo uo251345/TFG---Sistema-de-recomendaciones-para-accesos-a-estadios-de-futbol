@@ -22,4 +22,4 @@ Pelayo Ricardo Tiesta Cosío
 * Universidad de Oviedo
 * Escuela Politécnica de Ingeniería de Gijón
 
-<img "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Logo_Universidad_de_Oviedo_centrado.jpg/245px-Logo_Universidad_de_Oviedo_centrado.jpg" alt="Logo Uniovi" width='350' align="left">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Logo_Universidad_de_Oviedo_centrado.jpg/245px-Logo_Universidad_de_Oviedo_centrado.jpg" alt="Logo Uniovi" width='350' align="left">
