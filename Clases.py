@@ -161,8 +161,8 @@ class Asiento():
     def nodoPrePreFinal(self):
         """
         Función para rellenar el nodoPrePrefinal
-        Se calcula primero si se ira al lado derecho o izquierdo en funcion de la ubicacion horizontal del asiento.
-        Posteriormente se calcula si el nodoPrePrefinal sera el nodo superior o inferior
+        Se calcula primero si se ira al lado derecho o izquierdo en función de la ubicación horizontal del asiento.
+        Posteriormente se calcula si el nodoPrePrefinal será el nodo superior o inferior
 
         Raises
         ------
@@ -314,8 +314,10 @@ class ThreadingOcupacion(object):
         thread.start()                                  
 
     def run(self):
-        """ Metodo para corren en segundo plano y modificar el peso del grafo con la ocupacion """
-        """ Si dado = 1 añado de 0 - 10 personsas si sale 0 resto de 0 - 10 (siempre que no sea menor que cero) """
+        """
+        Metodo para corren en segundo plano y modificar el peso del grafo con la ocupación.
+        """
+        #Si dado = 1 añado de 0 - 10 personsas si sale 0 resto de 0 - 10 (siempre que no sea menor que cero)
         while self._running:
             if not self._paused:
                 for u, v, d in self.Grafo.edges(data=True):

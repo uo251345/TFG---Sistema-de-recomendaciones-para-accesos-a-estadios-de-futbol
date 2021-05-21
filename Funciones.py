@@ -376,7 +376,7 @@ def addnodoPrefinal(G, posicionUnion, sectorEspectador, enlacePreFinal, fila, no
     enlacePreFinal : Tupla
         Enlace actual del grafo que se borrara para agregar el nuevo nodo Prefinal.
     fila : Integer
-        Valor de la fila donde esta el asiento.
+        Valor de la fila donde está el asiento.
     nombreNodoPrefinal : String, optional
         Nombre del nodo prefinal resultante. Valor por defecto 'NP'.
 
@@ -734,7 +734,7 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
         
     Returns
     -------
-    Plt donde se dibujo.
+    Plt donde se dibuja : module
         
     """
 
@@ -817,7 +817,7 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
 
 def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, NodoPrefinal_pos, Asiento_pos , peso='weight'):
     """
-    Función pará pintar el grafo segun atributos.
+    Función para pintar el grafo segun atributos.
     
     Parameters
     ----------
@@ -968,7 +968,7 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
 
 def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador, sectores, asiento, NodoPrefinal_pos, Asiento_pos, peso='weight'):
     """
-    Función pará pintar el grafo con la ruta más rapida.
+    Función para pintar el grafo con la ruta más rapida.
     
     Parameters
     ----------
