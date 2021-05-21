@@ -36,7 +36,7 @@ copyright = '2021, Pelayo Ricardo Tiesta Cosío'
 author = 'Pelayo Tiesta Cosío'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.0'
+version = '1.0.0'
 
 
 # -- General configuration ---------------------------------------------------
