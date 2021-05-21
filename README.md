@@ -23,5 +23,5 @@ Pelayo Ricardo Tiesta Cosío
 * Escuela Politécnica de Ingeniería de Gijón
 
 
-![Image](https://i.imgur.com/KoWMQfd.jpg) ![Image](https://i.imgur.com/0JTADe9.jpg)
+![Image](https://i.imgur.com/KoWMQfd.jpg?1) ![Image](https://i.imgur.com/0JTADe9.jpg)
 
