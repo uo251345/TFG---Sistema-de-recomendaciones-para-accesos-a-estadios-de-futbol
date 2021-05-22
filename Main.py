@@ -53,7 +53,7 @@ ion()
 
 
 #Se lee el grafo del fichero JSON
-G = Funciones.importarGrafoJSON(__location__ + "\\Ficheros\\Nodos.json",)
+G = Funciones.importarGrafoJSON(__location__ + "\\Ficheros\\Grafo.json",)
 
 #Se leen los sectores del fichero Sectores    
 sectores = Funciones.leerSectoresCSV(__location__ + "\\Ficheros\\Sectores.csv", G)
@@ -426,6 +426,8 @@ while True:
         if destino not in G.nodes():
             print("El nodo no esta en el grafo")
         else:
+            init(autoreset=True)
+            
             
             #Se hace una copia del grafo G orginal para poder modificarlo
             G_ControlDeAglomeraciones  = None
@@ -463,6 +465,8 @@ while True:
             #Hasta que no se llegue al destino se sigue preguntando cuando quiere el usuario parar
             #Es decir el ENTER del usuario corresponde a que esta en ese nodo parado esperando indicaciones
             while(nodoParado != destino):
+                init(autoreset=True)
+                
                 
                 #Pauso el hilo hasta que el usuario diga
                 G_ControlDeAglomeracionesParado = hilo.terminate()
