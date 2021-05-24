@@ -28,9 +28,6 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-#Ubicacion del fichero Main.py
-__location__ = os.path.realpath(
-    os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
 #Variables para la ejecuccion del programa
@@ -51,12 +48,14 @@ FACTOR_PLANOS = 1.56
 #Habilita el modo interactivo en pyplot para poder mostrar y continuar
 ion()
 
+#Para resetear la consola
+init(autoreset=True)
 
 #Se lee el grafo del fichero JSON
-G = Funciones.importarGrafoJSON(__location__ + "\\Ficheros\\Grafo.json",)
+G = Funciones.importarGrafoJSON("Grafo.json",)
 
 #Se leen los sectores del fichero Sectores    
-sectores = Funciones.leerSectoresCSV(__location__ + "\\Ficheros\\Sectores.csv", G)
+sectores = Funciones.leerSectoresCSV("Sectores.csv", G)
 
 #Se muestra el grafo G con los sectores y el peso
 plot_General = Funciones.DibujarGrafoGeneral(G, True, sectores , 'weight')
@@ -67,12 +66,22 @@ Se crea un perfil del espectador para obtener la puerta de acceso y la ubicacion
 """
 
 #Se piden al espectador los datos para crearle un perfil
-print("")
-print("PERFIL DEL ESPECTADOR")
-print("")
+print("\nDATOS DE LA ENTRADA\n")
+
+while True:
+    num_puertaEntrada = None
+    num_puertaEntrada = input("Puerta de entrada [número]: ")
+    puertaEntrada = 'P' + str(num_puertaEntrada)
+    if puertaEntrada != 'P1':
+        print("Actualmente solo existe la puerta de entrada P1")
+    else: 
+        break
+
 while True:
     try:
-        sector = input("Sector [Formato S12]: ").upper()
+        sector = None
+        num_sector = input("Sector [número]: ")
+        sector = 'S' + str(num_sector)
         if sector in sectores:
             sectorEspectador = sectores[sector]
             break
@@ -83,7 +92,7 @@ while True:
 
 while True:
     try:
-        fila = int(input("Fila: "))
+        fila = int(input("Fila [número]: "))
         if 1 <= fila:
             break
         raise ValueError()
@@ -93,7 +102,7 @@ while True:
 
 while True:
     try:
-        columna = int(input("Columna: "))
+        columna = int(input("Columna [número]: "))
         if 1 <= columna:
             break
         raise ValueError()
@@ -101,14 +110,7 @@ while True:
         print("Columna debe ser mayor o igual que 1")
 
 
-while True:
-    puertaEntrada = input("Puerta de entrada (Por defecto P1 [ENTER])").upper()
-    if not puertaEntrada:
-        puertaEntrada = 'P1'
-        break
-    else: 
-        if puertaEntrada != 'P1':
-                print("Actualmente solo existe la puerta de entrada P1")
+
 
 
 #Se crea un asiento con el sector donde esta, la fila y columna dentro de este
@@ -307,7 +309,6 @@ while True:
             print("El nodo no esta en el grafo")
             print(destino)
         else:
-            
             
             respuestasAtributosPersonales = Funciones.respuestas
             

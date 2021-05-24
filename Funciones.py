@@ -156,7 +156,8 @@ class ventanaAtributosPersonales():
     """
     
     def __init__(self):
-
+        
+        
         #Mostramos el formulario de consulta
         self.root = Tk()
         
@@ -931,7 +932,7 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     plt.axis('off')
     plt.title("Grafo según Atributos Personales")
     
-    plt.text(0, -1.5, 'La ruta, según criterios del usuaruio, recomendada desde [' + origen + '] hasta  [' + destino + '] es la ruta que pasa por los nodos: ' + str(ruta), style='italic',
+    plt.text(0, -1.5, 'La ruta, según atributos, recomendada desde [' + origen + '] hasta  [' + destino + '] es la ruta que pasa por los nodos: ' + str(ruta), style='italic',
                     bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
            
     
@@ -949,6 +950,9 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
 
     # Se pinta el asiento
     dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt)
+
+    #Se dibuja una linea para simular el camino desde las escaleras hasta el  asiento
+    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt)
 
     # Se pintan los datos del grafo
     dibujarDatosEspectadorMasRapida(Grafo, espectador, plt)
@@ -1233,7 +1237,7 @@ Por defecto son todas 0
 """
 
         
-respuestas = Respuestas()  
+respuestas = Respuestas()
 
 
 

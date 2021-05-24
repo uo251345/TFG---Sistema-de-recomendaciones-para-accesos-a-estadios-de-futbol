@@ -21,9 +21,9 @@ El uso principal en este proyecto es la creación de grafos, compuestos por enla
 se podrá visualizar el grafo de forma gráfica, además de realizar sobre este modificaciones, lecturas y aplicaciones de algoritmos para la obtención de diferentes rutas.
 
 
-tkinder:
+tkinter:
 -----------
-`tkinder <https://docs.python.org/3/library/tk.html>`_ es modulo Python que permite crear ý mostrar interfaces grficas al usuario.
+`tkinter <https://docs.python.org/3/library/tk.html>`_ es módulo Python que permite crear y mostrar interfaces gráficas al usuario.
 
 El uso principal en este proyecto será la creación de un formulario para leer las preferencias de la ruta del espectador.
 
@@ -35,9 +35,9 @@ Numpy:
 
 json:
 ----------
-`threading <https://docs.python.org/3/library/threading.html>`_ es un módulo Python utilizado para condificar y descodificar estructuras de datos en formato .json.
+`json <https://docs.python.org/3/library/json.html>`_ es un módulo Python utilizado para condificar y descodificar estructuras de datos en formato .json.
  
  
 threading:
 ----------
-`threading <https://docs.python.org/3/library/threading.html>`_ es un módulo Python utilizado para crear hilos de paralelismo en los que realizar diferentes tareas simultaneamente.
+`threading <https://docs.python.org/3/library/threading.html>`_ es un módulo Python utilizado para crear hilos de paralelismo en los que realizar diferentes tareas simultáneamente.
