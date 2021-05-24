@@ -1044,9 +1044,9 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     pos=nx.get_node_attributes(Grafo,'pos')
      
     # Dibujamos los enlaces del Grafo 
-    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesNoSolucion, width=1, arrowsize=10,  edge_color='black', arrows = True,  connectionstyle="arc3,rad=0.1")
     # Dibujamos los enlaces Solucion del Grafo (Color Verde)
-    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesSolucion, width=3.5, edge_color='green', arrows = True)
+    nx.draw_networkx_edges(Grafo,pos,edgelist=enlacesSolucion, width=3.5, edge_color='green', arrows = True,  connectionstyle="arc3,rad=0.1")
      
     # Dibujamos los atributos del Grafo 
     nx.draw_networkx_labels(Grafo,pos,font_size=12,font_family='sans-serif')
@@ -1057,7 +1057,7 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
                        for u, v, d in Grafo.edges(data=True)])
     
      
-    nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=enlaces_etiquetas)
+    nx.draw_networkx_edge_labels(Grafo, pos, edge_labels=enlaces_etiquetas, label_pos = 0.30, font_size = 8, bbox = dict(alpha=0))
      
     plt.axis('off')
     plt.title("Grafo ruta más rápida")

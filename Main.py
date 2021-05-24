@@ -287,12 +287,16 @@ while True:
             # Se dibuja el grafo con las soluciones
             plot_MasRapida = Funciones.DibujarGrafoMasRapida(G_MasRapida, False, origen, destino, djk_Ruta_MasRapida[1], espectador, sectores, asiento, NodoPrefinal_pos, Asiento_pos)
     
+            print( G_MasRapida.edges('21', data= True) )
+            print( G_MasRapida.edges('31', data= True) )
            
             #Limpieza de variables
             G_MasRapida = None
             djk_Ruta_MasRapida = None
     
-            rutaMasRapida = False     
+            rutaMasRapida = False    
+            
+            
             
            
             
