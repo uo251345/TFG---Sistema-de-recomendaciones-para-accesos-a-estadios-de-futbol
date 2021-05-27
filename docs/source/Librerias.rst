@@ -35,7 +35,7 @@ Numpy:
 
 json:
 ----------
-`json <https://docs.python.org/3/library/json.html>`_ es un módulo Python utilizado para condificar y descodificar estructuras de datos en formato .json.
+`json <https://docs.python.org/3/library/json.html>`_ es un módulo Python utilizado para codificar y descodificar estructuras de datos en formato .json.
  
  
 threading:
