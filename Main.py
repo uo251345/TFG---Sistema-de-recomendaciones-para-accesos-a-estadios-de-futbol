@@ -116,7 +116,7 @@ while True:
 #Se crea un asiento con el sector donde esta, la fila y columna dentro de este
 asiento = Clases.Asiento(sectorEspectador, fila, columna)
 
-#Se crea el espectador con un ID, un asiento y una puerta de entrada
+#Se crea el espectador con un ID [en un futuro será el codigo de la entrada], un asiento y una puerta de entrada
 espectador = Clases.Espectador(uuid.uuid4(), asiento, puertaEntrada)
 
 #El origen de la ruta sera la puerta de entrada
@@ -286,9 +286,7 @@ while True:
 
             # Se dibuja el grafo con las soluciones
             plot_MasRapida = Funciones.DibujarGrafoMasRapida(G_MasRapida, False, origen, destino, djk_Ruta_MasRapida[1], espectador, sectores, asiento, NodoPrefinal_pos, Asiento_pos)
-    
-            print( G_MasRapida.edges('21', data= True) )
-            print( G_MasRapida.edges('31', data= True) )
+
            
             #Limpieza de variables
             G_MasRapida = None
