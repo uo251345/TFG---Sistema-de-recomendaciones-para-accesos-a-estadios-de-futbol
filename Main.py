@@ -331,8 +331,8 @@ while True:
                 #Se saca el valor personal para cada atributo
                 #Se calcula el factor segun la folmula Factor_i = 1 - (valoracionDelUsuario / 6)
                 
-                k_escalerascConBarandillas = getattr(respuestasAtributosPersonales, 'f_escalerasConBarandillas')
-                k_escalerasEnBuenEstado = getattr(respuestasAtributosPersonales, 'f_escalerasEnBuenEstado')
+                k_pasilloscConBarandillas = getattr(respuestasAtributosPersonales, 'f_escalerasConBarandillas')
+                k_pasillosEnBuenEstado = getattr(respuestasAtributosPersonales, 'f_escalerasEnBuenEstado')
                 k_pasillosAmplios = getattr(respuestasAtributosPersonales, 'f_pasillosAmplios')
                 k_pasillosVentilados = getattr(respuestasAtributosPersonales, 'f_pasillosVentilados')
                 k_pasillosSecos = getattr(respuestasAtributosPersonales, 'f_pasillosSecos')
@@ -357,11 +357,11 @@ while True:
                     
                     #Si tiene barandillas
                     if (d['barandilla'] == 'True'):
-                        factores.append(k_escalerascConBarandillas)
+                        factores.append(k_pasilloscConBarandillas)
                     
                     #Si esta en buen estado
                     if (d['pasilloBuenEstado'] == 'True'):
-                        factores.append(k_escalerasEnBuenEstado)
+                        factores.append(k_pasillosEnBuenEstado)
                         
                     #Si esta en buen estado
                     if (d['pasilloAmplio'] == 'True'):
