@@ -460,10 +460,10 @@ while True:
             #Se lanza un hilo con la simulacion de la ocupacion de los pasillo
             hilo = Clases.ThreadingOcupacion(G_ControlDeAglomeraciones)
             print(Fore.YELLOW + "\n\n\nEspere un momento. Se esta rellenando la grada para la simulación.")
-            time.sleep(5)
+            time.sleep(2)
             
             init(autoreset=True)
-            print("Listo. Su nodo prefinal es el nodo: " + destino )
+            # print("Listo. Su nodo prefinal es el nodo: " + destino )
                  
             #Hasta que no se llegue al destino se sigue preguntando cuando quiere el usuario parar
             #Es decir el ENTER del usuario corresponde a que esta en ese nodo parado esperando indicaciones
@@ -509,7 +509,7 @@ while True:
                 #Se duerme para simular el caminar
                 print(Fore.YELLOW + "Espere un momento. Se esta simulando su trayecto.")
                 init(autoreset=True)
-                time.sleep(5)  
+                time.sleep(2)  
                 
                 
             

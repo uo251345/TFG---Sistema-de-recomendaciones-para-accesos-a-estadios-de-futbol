@@ -531,15 +531,15 @@ def obtenerPosicionAsiento(Grafo, sectores, asiento, nodoPrefinal, plot):
     return ( posicion_NodoPrefinal, posicion_Union ,(numpy.round( posicionX_asiento, 2 ), numpy.round( posicionY_asiento,2 )) )
 
 
-def dibujarAsientoGrafoGeneral(posicionX_asiento, posicionY_asiento, plt):
+def dibujarAsientoGrafoGeneral(posicionX_asiento, posicionY_asiento, plt, color = 'red'):
     #Se dibuja el asientocon un * rojo
     plt.ion()
     plt.draw()
     plt.pause(0.0001)
-    plt.plot(posicionX_asiento, posicionY_asiento, marker="*", markersize=10, color="red")
+    plt.plot(posicionX_asiento, posicionY_asiento, marker="*", markersize=10, color= color)
     plt.pause(0.0001)
 
-def dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plot):
+def dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plot, color = 'red'):
     """
     Funcion para dibujar una línea que emule el camino desde la escalera hasta el asiento.
 
@@ -559,7 +559,7 @@ def dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plot):
     #Recta nodo Prefinal hasta el asiento 
     valores_x_escaleras = [NodoPrefinal_pos[0] , Asiento_pos[0] ] 
     valores_y_escaleras = [NodoPrefinal_pos[1], Asiento_pos[1]]
-    plot.plot(valores_x_escaleras , valores_y_escaleras, linestyle = ':', color = 'red')
+    plot.plot(valores_x_escaleras , valores_y_escaleras, linestyle = ':', color = color)
     
 
     
@@ -806,7 +806,8 @@ def DibujarGrafoOcupacion(Grafo, mostrarPesos, origen, destino,  espectador, sec
     #Si esta a True se muestra en enlace desde las escaleras hasta el asiento
     if(dibujarEnlacePrefinalAsiento):
         # Se dibujan los enlaces del nodo prefinal al asiento
-        dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt)
+        dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt, 'forestgreen')
+        dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt, 'forestgreen')
 
     plt.ion()
     plt.show(block=False)
@@ -949,17 +950,15 @@ def DibujarGrafoAtributos(Grafo, mostrarPesos, origen, destino, ruta, espectador
     plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
 
     # Se pinta el asiento
-    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt)
+    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt, 'forestgreen')
 
     #Se dibuja una linea para simular el camino desde las escaleras hasta el  asiento
-    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt)
+    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt, 'forestgreen')
 
     # Se pintan los datos del grafo
     dibujarDatosEspectadorMasRapida(Grafo, espectador, plt)
 
 
-    # Se pintan los datos del grafo
-    dibujarDatosEspectadorAtributos(Grafo, espectador, plt)
     
     
 
@@ -1079,10 +1078,10 @@ def DibujarGrafoMasRapida(Grafo, mostrarPesos, origen, destino, ruta, espectador
     plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'   , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
 
     # Se pinta el asiento
-    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt)
+    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt, 'forestgreen')
 
     #Se dibuja una linea para simular el camino desde las escaleras hasta el  asiento
-    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt)
+    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt, 'forestgreen')
 
     # Se pintan los datos del grafo
     dibujarDatosEspectadorMasRapida(Grafo, espectador, plt)
@@ -1205,11 +1204,11 @@ def DibujarGrafoMasCorta(Grafo, mostrarPesos, origen, destino, ruta, espectador,
     plt.text(0, -0.8, 'LEYENDA\n' + '\nEnlaces solución: Verde' + '\n\nAsiento: Asterisco Rojo ' + '\nCamino nodo prefinal - asiento: Línea Roja a puntos'  , style='italic', fontweight='normal',bbox={'facecolor': 'orange', 'alpha': 0.2, 'pad': 2})
     
     # Se pinta el asiento
-    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt)
+    dibujarAsientoGrafoGeneral(getattr(asiento, 'posicion_X'), getattr(asiento, 'posicion_Y') , plt, 'forestgreen')
     
     
     # Se dibujan el enlace del nodo Prefinal al asiento
-    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt)
+    dibujarRectaNodoPrefinal_Asiento(NodoPrefinal_pos, Asiento_pos, plt, 'forestgreen')
     
 
     # Se pintan los datos del grafo
